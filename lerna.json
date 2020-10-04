@@ -1,0 +1,14 @@
+{
+  "packages": ["@echarts-start/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "ignoreChanges": ["**/*.md"],
+  "command": {
+    "version": {
+      "exact": false,
+      "allowBranch": "master",
+      "message": "chore(release): %s"
+    }
+  },
+  "version": "independent"
+}

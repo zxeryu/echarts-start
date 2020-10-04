@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": ".tmp",
+    "paths": {
+      "@babel/types": ["node_modules/@babel/types"]
+    },
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "jsx": "react",
+    "module": "commonjs",
+    "target": "es5",
+    "pretty": true,
+    "strict": true
+    //    "sourceMap": true
+  },
+  "exclude": [".tmp/*", "dist/*", "node_modules/*"]
+}
