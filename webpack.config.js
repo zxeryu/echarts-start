@@ -4,7 +4,11 @@ module.exports = {
     app: "./src/index.tsx",
   },
   output: {
+    path: path.join(__dirname, "dist"),
     filename: "build.js",
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   module: {
     rules: [

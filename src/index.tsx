@@ -1,4 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { ChartDemo } from "./ChartDemo";
 
-ReactDOM.render(<div>great</div>, document.getElementById("root"));
+ReactDOM.render(
+  <div>
+    <ChartDemo />
+  </div>,
+  document.getElementById("root"),
+);
