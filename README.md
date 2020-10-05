@@ -47,6 +47,8 @@ yarn add @echarts-start/react-bridge
       </Chart>
 ```
 
+[详细 demo](https://github.com/zxeryu/echarts-start/tree/master/%40echarts-start/react-bridge)
+
 ## Demo
 
 ```
