@@ -11,7 +11,9 @@
   ],
   "scripts": {
     "start": "webpack-dev-server",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "prepare": "tsc && lerna run prepare",
+    "release": "lerna version --conventional-commits"
   },
   "dependencies": {
     "lodash": "^4.17.20",
