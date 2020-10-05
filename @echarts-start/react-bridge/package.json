@@ -24,7 +24,7 @@
     "url": "git+https://github.com/zxeryu/echarts-start.git"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js"
+    "prepare": "rollup -c rollup.config.js"
   },
   "bugs": {
     "url": "https://github.com/zxeryu/echarts-start/issues"
