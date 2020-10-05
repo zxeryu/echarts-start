@@ -1,13 +1,14 @@
-###A echarts bridge for react.
-##Install
+A echarts bridge for react.
+
+## Install
 
 ```
 yarn add @echarts-start/react-bridge
 ```
 
-##Usage
+## Usage
 
-```$xslt
+```
   import { Dataset, Legend, Series, Tooltip, XAxis, YAxis, Chart } from "@echarts-start/react-bridge";
   //data
   const datasetData = useMemo(
@@ -39,9 +40,9 @@ yarn add @echarts-start/react-bridge
       </Chart>
 ```
 
-##Demo
+## Demo
 
-```$xslt
+```
 $ git clone https://github.com/zxeryu/echarts-start
 $ cd echarts-start
 $ yarn install && yarn start
