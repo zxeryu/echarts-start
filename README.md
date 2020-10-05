@@ -1,4 +1,11 @@
-A echarts bridge for react.
+基于 echarts 的 react 桥接层. (并不是一个完整的图表解决方案，仅仅桥接写法)
+
+## Necessary
+
+```
+1. window对象注入echarts. 如：add <script type="text/javascript" src="//cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script> in html
+2. 需要 "lodash": "^4.x", "react": "16.x", "uuid": "^8.x"
+```
 
 ## Install
 
