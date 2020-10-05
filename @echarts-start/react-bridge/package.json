@@ -1,5 +1,5 @@
 {
-  "name": "react-bridge",
+  "name": "@echarts-start/react-bridge",
   "version": "0.0.0",
   "description": "echarts bridge for react",
   "keywords": [
@@ -10,14 +10,12 @@
   "author": "zx <zxpstudy@163.com>",
   "homepage": "https://github.com/zxeryu/echarts-start#readme",
   "license": "MIT",
-  "main": "lib/react-bridge.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "dist/"
   ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "publishConfig": {
     "access": "public"
   },
@@ -26,7 +24,7 @@
     "url": "git+https://github.com/zxeryu/echarts-start.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "rollup -c rollup.config.js"
   },
   "bugs": {
     "url": "https://github.com/zxeryu/echarts-start/issues"

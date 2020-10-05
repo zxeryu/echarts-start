@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Chart, Dataset, Legend, Series, Tooltip, XAxis, YAxis } from "react-bridge";
+import { Chart, Dataset, Legend, Series, Tooltip, XAxis, YAxis } from "@echarts-start/react-bridge";
 
 export const ChartDemo = () => {
   const datasetData = useMemo(

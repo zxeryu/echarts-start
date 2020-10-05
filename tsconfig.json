@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "outDir": ".tmp",
     "paths": {
       "@babel/types": ["node_modules/@babel/types"]
     },
@@ -16,8 +15,14 @@
     "module": "commonjs",
     "target": "es5",
     "pretty": true,
-    "strict": true
+    "strict": true,
     //    "sourceMap": true
+    "allowJs": false,
+    /* emit ts declaration cache */
+    "declaration": true,
+    "noEmitOnError": false,
+    "emitDeclarationOnly": true,
+    "outDir": ".tmp"
   },
   "exclude": [".tmp/*", "dist/*", "node_modules/*"]
 }
