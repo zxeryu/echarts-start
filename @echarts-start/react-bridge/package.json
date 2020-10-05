@@ -1,6 +1,6 @@
 {
   "name": "@echarts-start/react-bridge",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "echarts bridge for react",
   "keywords": [
     "echarts",
@@ -31,8 +31,8 @@
   },
   "peerDependencies": {
     "@babel/runtime-corejs3": "*",
-    "react": "16.x",
     "lodash": "^4.x",
+    "react": "16.x",
     "uuid": "^8.x"
   },
   "devDependencies": {
