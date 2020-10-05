@@ -1,4 +1,4 @@
-A echarts bridge for react.
+###A echarts bridge for react.
 ##Install
 
 ```
