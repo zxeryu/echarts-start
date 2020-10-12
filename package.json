@@ -10,10 +10,10 @@
     "@echarts-start/*"
   ],
   "scripts": {
-    "start": "webpack-dev-server",
     "bootstrap": "lerna bootstrap",
     "prepare": "tsc && lerna run prepare",
-    "release": "lerna version --conventional-commits"
+    "release": "lerna version --conventional-commits",
+    "start": "cd example/demo-react && webpack-dev-server"
   },
   "dependencies": {
     "lodash": "^4.17.20",
