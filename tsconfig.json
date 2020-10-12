@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "*": ["__types__/*", "*"],
       "@babel/types": ["node_modules/@babel/types"]
     },
     "resolveJsonModule": true,
@@ -22,7 +23,8 @@
     "declaration": true,
     "noEmitOnError": false,
     "emitDeclarationOnly": true,
-    "outDir": ".tmp"
+    "outDir": ".tmp",
+    "experimentalDecorators": true
   },
   "exclude": [".tmp/*", "dist/*", "node_modules/*"]
 }
