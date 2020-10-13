@@ -1,0 +1,41 @@
+{
+  "name": "@echarts-start/vue-bridge",
+  "version": "0.0.0",
+  "description": "echarts bridge for vue",
+  "keywords": [
+    "echarts",
+    "vue",
+    "typescript"
+  ],
+  "author": "zx <zxpstudy@163.com>",
+  "homepage": "https://github.com/zxeryu/echarts-start#readme",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zxeryu/echarts-start.git"
+  },
+  "scripts": {
+    "prepare": "rollup -c rollup.config.js"
+  },
+  "bugs": {
+    "url": "https://github.com/zxeryu/echarts-start/issues"
+  },
+  "peerDependencies": {
+    "@babel/runtime-corejs3": "*",
+    "lodash": "^4.x",
+    "vue": "2.x",
+    "uuid": "^8.x"
+  },
+  "dependencies": {
+    "@types/echarts": "4.6.5"
+  }
+}

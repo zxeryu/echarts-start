@@ -1,10 +1,17 @@
 <template>
-  <div>ChartDemo</div>
+  <div>
+    ChartDemo123
+    <BaseChart />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-@Component
+import { BaseChart } from "@echarts-start/vue-bridge";
+
+@Component({
+  components: { BaseChart },
+})
 export default class ChartDemo extends Vue {}
 </script>
 
