@@ -1,18 +1,39 @@
 <template>
   <div>
-    ChartDemo123
-    <BaseChart />
+    <BaseChart style="width: 100%; height: 400px">
+      <XAxis type="category" />
+      <YAxis />
+      <Dataset :source="chartData" :dimensions="['product', '2015', '2016', '2017']" />
+      <Series type="line" />
+      <Series type="line" />
+      <Series type="line" />
+      <Tooltip trigger="axis" />
+      <Legend />
+    </BaseChart>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { BaseChart } from "@echarts-start/vue-bridge";
+import { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend } from "@echarts-start/vue-bridge";
 
 @Component({
-  components: { BaseChart },
+  components: { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend },
 })
-export default class ChartDemo extends Vue {}
+export default class ChartDemo extends Vue {
+  chartData: [] = [];
+
+  data(): object {
+    return {
+      chartData: [
+        { product: "Matcha Latte", "2015": 43.3, "2016": 85.8, "2017": 93.7 },
+        { product: "Milk Tea", "2015": 83.1, "2016": 73.4, "2017": 55.1 },
+        { product: "Cheese Cocoa", "2015": 86.4, "2016": 65.2, "2017": 82.5 },
+        { product: "Walnut Brownie", "2015": 72.4, "2016": 53.9, "2017": 39.1 },
+      ],
+    };
+  }
+}
 </script>
 
 <style scoped></style>

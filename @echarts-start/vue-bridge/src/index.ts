@@ -1,3 +1,2 @@
-import BaseChart from "./BaseChart.vue";
-
-export { BaseChart };
+export * from "./Chart";
+export * from "./Options";
