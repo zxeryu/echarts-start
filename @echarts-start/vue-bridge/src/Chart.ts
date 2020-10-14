@@ -1,4 +1,4 @@
-import { Component, Prop, Provide, Ref, Vue } from "vue-property-decorator";
+import { Component, Prop, Provide, ProvideReactive, Ref, Vue } from "vue-property-decorator";
 import { CreateElement, VNode } from "vue";
 import { EChartOption, ECharts as IEChart } from "echarts";
 import { assign, forEach, get, has, isArray, keys, map, omit, size, some } from "lodash";
@@ -21,7 +21,7 @@ export class BaseChart extends Vue {
   private yAxis: EChartOption | undefined;
   private list: EChartOption[] = [];
 
-  @Provide("chart") chart: IEChart | undefined = undefined;
+  @ProvideReactive("chart") chart: IEChart | undefined = undefined;
   @Provide("updateOption") updateOption: (option: EChartOption) => void = this.updateOptions;
 
   data(): object {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="handleLoadingClick">toggle loading</button>
     <BaseChart style="width: 100%; height: 400px">
       <XAxis type="category" />
       <YAxis />
@@ -9,19 +10,32 @@
       <Series type="line" />
       <Tooltip trigger="axis" />
       <Legend />
+      <MethodLoading :loading="loading" />
+      <MethodResize :resize="true" />
     </BaseChart>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend } from "@echarts-start/vue-bridge";
+import {
+  BaseChart,
+  XAxis,
+  YAxis,
+  Dataset,
+  Series,
+  Tooltip,
+  Legend,
+  MethodLoading,
+  MethodResize,
+} from "@echarts-start/vue-bridge";
 
 @Component({
-  components: { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend },
+  components: { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend, MethodLoading, MethodResize },
 })
 export default class ChartDemo extends Vue {
   chartData: [] = [];
+  loading: boolean = false;
 
   data(): object {
     return {
@@ -32,6 +46,10 @@ export default class ChartDemo extends Vue {
         { product: "Walnut Brownie", "2015": 72.4, "2016": 53.9, "2017": 39.1 },
       ],
     };
+  }
+
+  handleLoadingClick() {
+    this.loading = !this.loading;
   }
 }
 </script>
