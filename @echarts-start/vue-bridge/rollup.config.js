@@ -32,7 +32,7 @@ export default [
     external: ["lodash", "vue", "uuid"],
   },
   {
-    input: "types/index.d.ts",
+    input: "../../.tmp/@echarts-start/vue-bridge/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "es" }],
     plugins: [dts()],
   },
