@@ -1,4 +1,5 @@
 import { Component, InjectReactive, Prop, Vue, Watch } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
 import { CreateElement, VNode } from "vue";
 import { ECharts as IEChart, EChartsLoadingOption, EChartsResizeOption } from "echarts";
 import { debounce } from "lodash";
@@ -48,10 +49,6 @@ export class MethodLoading extends BaseMethod {
 
   @Prop() loading?: IChartMethodProps["loading"];
 
-  mounted(): void {
-    this.onLoadingChange();
-  }
-
   @Watch("loading")
   onLoadingChange() {
     if (typeof this.loading === "boolean") {
@@ -66,3 +63,25 @@ export class MethodLoading extends BaseMethod {
     this.loading ? this.chart.showLoading("default", this.loading) : this.chart.hideLoading();
   }
 }
+
+// @Component
+// export class ChartMethods extends Vue {
+//   @Prop() resize?: IChartMethodProps["resize"];
+//   @Prop() loading?: IChartMethodProps["loading"];
+//
+//   render(createElement: CreateElement): VNode {
+//     return createElement("div", {}, [
+//       createElement(MethodLoading, { props: { loading: this.loading } }),
+//       createElement(MethodResize, { props: { resize: this.resize } }),
+//     ]);
+//   }
+// }
+
+@Component
+export class ChartMethodProps extends Vue {
+  @Prop() resize?: IChartMethodProps["resize"];
+  @Prop() loading?: IChartMethodProps["loading"];
+}
+
+@Component
+export class ChartMethods extends mixins(MethodResize, MethodLoading) {}

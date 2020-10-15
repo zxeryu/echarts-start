@@ -1,11 +1,15 @@
 import { Component, Prop, Provide, ProvideReactive, Ref, Vue } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
 import { CreateElement, VNode } from "vue";
 import { EChartOption, ECharts as IEChart } from "echarts";
-import { assign, forEach, get, has, isArray, keys, map, omit, size, some } from "lodash";
+import { assign, forEach, get, has, isArray, keys, map, omit, size, some, pick } from "lodash";
 import { getECharts } from "./util";
+import { ChartMethodProps, ChartMethods } from "./Method";
+import { Extra, ExtraKeys, ExtraProps } from "./Options";
+import { COLOR_PLATE_24 } from "./theme";
 
 @Component
-export class BaseChart extends Vue {
+class BaseChartProps extends Vue {
   @Prop() theme?: object | string;
   @Prop() opts?: {
     devicePixelRatio?: number;
@@ -14,7 +18,10 @@ export class BaseChart extends Vue {
     height?: number | string;
   };
   @Prop() chartRef?: (chartRef: IEChart) => void;
+}
 
+@Component
+export class BaseChart extends BaseChartProps {
   @Ref("chartDiv") chartDiv!: HTMLDivElement;
 
   private xAxis: EChartOption | undefined;
@@ -32,6 +39,7 @@ export class BaseChart extends Vue {
 
   mounted(): void {
     this.chart = getECharts().init(this.chartDiv, this.theme, this.opts);
+    this.chartRef && this.chartRef(this.chart);
   }
 
   setOption(chart: IEChart, option: EChartOption) {
@@ -100,5 +108,22 @@ export class BaseChart extends Vue {
 
   render(createElement: CreateElement): VNode {
     return createElement("div", { ref: "chartDiv" }, this.chart ? this.$slots.default : []);
+  }
+}
+
+@Component
+export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) {
+  render(createElement: CreateElement): VNode {
+    return createElement(
+      BaseChart,
+      {
+        props: pick(this.$options.propsData, ["theme", "opts", "chartRef"]),
+      },
+      [
+        createElement(ChartMethods, { props: pick(this.$options.propsData, ["resize", "loading"]) }),
+        createElement(Extra, { props: { color: COLOR_PLATE_24, ...pick(this.$options.propsData, ExtraKeys) } }),
+        this.$slots.default,
+      ],
+    );
   }
 }

@@ -1,4 +1,5 @@
 import { Component, Inject, Prop, Vue } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
 import { EChartOption, VisualMap } from "echarts";
 import { CreateElement, VNode } from "vue";
 import { v4 as uuid } from "uuid";
@@ -534,8 +535,26 @@ export class TextStyle extends BaseOption {
   optionKey = "textStyle";
 }
 
+export const ExtraKeys = [
+  "color",
+  "backgroundColor",
+  "animation",
+  "animationThreshold",
+  "animationDuration",
+  "animationEasing",
+  "animationDelay",
+  "animationDurationUpdate",
+  "animationEasingUpdate",
+  "animationDelayUpdate",
+  "progressive",
+  "progressiveThreshold",
+  "blendMode",
+  "hoverLayerThreshold",
+  "useUTC",
+];
+
 @Component
-export class Extra extends BaseOption {
+export class ExtraProps extends Vue {
   @Prop() color?: string[];
   @Prop() backgroundColor?: string;
   @Prop() animation?: boolean;
@@ -551,6 +570,9 @@ export class Extra extends BaseOption {
   @Prop() blendMode?: string;
   @Prop() hoverLayerThreshold?: number;
   @Prop() useUTC?: boolean;
+}
 
+@Component
+export class Extra extends mixins(BaseOption, ExtraProps) {
   optionKey = "extra";
 }
