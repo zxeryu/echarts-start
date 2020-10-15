@@ -12,7 +12,22 @@
       <Legend />
       <MethodLoading :loading="loading" />
       <MethodResize :resize="true" />
+      <Event eventName="click" :eventHandler="handleChartClick" />
     </BaseChart>
+
+    <Chart style="width: 100%; height: 400px" backgroundColor="rgba(0,0,0,0.1)" :loading="loading" :resize="true">
+      <XAxis type="category" />
+      <YAxis />
+      <Dataset :source="chartData" :dimensions="['product', '2015', '2016', '2017']" />
+      <Series type="line" />
+      <Series type="line" />
+      <Series type="line" />
+      <Tooltip trigger="axis" />
+      <Legend />
+      <Event eventName="click" :eventHandler="handleChartClick" />
+    </Chart>
+
+    <Chart style="width: 100%; height: 400px" :chartRef="handleChartInit" />
   </div>
 </template>
 
@@ -28,10 +43,26 @@ import {
   Legend,
   MethodLoading,
   MethodResize,
+  Event,
+  IChartMouseEvent,
+  Chart,
 } from "@echarts-start/vue-bridge";
+import { ECharts as IEChart } from "echarts";
 
 @Component({
-  components: { BaseChart, XAxis, YAxis, Dataset, Series, Tooltip, Legend, MethodLoading, MethodResize },
+  components: {
+    BaseChart,
+    XAxis,
+    YAxis,
+    Dataset,
+    Series,
+    Tooltip,
+    Legend,
+    MethodLoading,
+    MethodResize,
+    Event,
+    Chart,
+  },
 })
 export default class ChartDemo extends Vue {
   chartData: [] = [];
@@ -50,6 +81,21 @@ export default class ChartDemo extends Vue {
 
   handleLoadingClick() {
     this.loading = !this.loading;
+  }
+
+  handleChartClick(e: IChartMouseEvent) {
+    console.log("=====chart-----click==", e);
+  }
+
+  handleChartInit(chart: IEChart) {
+    chart.setOption({
+      legend: {},
+      tooltip: { trigger: "axis" },
+      xAxis: { type: "category" },
+      yAxis: {},
+      series: [{ type: "line" }, { type: "line" }, { type: "line" }],
+      dataset: { dimensions: ["product", "2015", "2016", "2017"], source: this.chartData },
+    });
   }
 }
 </script>
