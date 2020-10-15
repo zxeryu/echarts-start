@@ -1,6 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import vue from "rollup-plugin-vue";
+import { terser } from "rollup-plugin-terser";
 import dts from "rollup-plugin-dts";
 
 export default [
@@ -28,6 +29,7 @@ export default [
         babelHelpers: "bundled",
         extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx", ".vue"],
       }),
+      terser(),
     ],
     external: ["lodash", "vue", "uuid"],
   },
