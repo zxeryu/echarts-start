@@ -1,6 +1,6 @@
 {
   "name": "@echarts-start/vue-bridge",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "echarts bridge for vue",
   "keywords": [
     "echarts",
@@ -32,8 +32,8 @@
   "peerDependencies": {
     "@babel/runtime-corejs3": "*",
     "lodash": "^4.x",
-    "vue": "2.x",
-    "uuid": "^8.x"
+    "uuid": "^8.x",
+    "vue": "2.x"
   },
   "dependencies": {
     "@types/echarts": "4.6.5"
