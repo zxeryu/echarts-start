@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Chart, Dataset, Legend, Series, Tooltip, XAxis, YAxis } from "@echarts-start/react-bridge";
+import {
+  BaseChart,
+  Chart,
+  Dataset,
+  Event,
+  Legend,
+  MethodResize,
+  Series,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "@echarts-start/react-bridge";
 
 const data = [
   { product: "Matcha Latte", "2015": 43.3, "2016": 85.8, "2017": 93.7 },
@@ -39,6 +50,28 @@ const Demo1 = () => {
 
 const Demo2 = () => {
   return (
+    <BaseChart style={{ width: "100%", height: 400 }}>
+      <XAxis type={"category"} />
+      <YAxis />
+      <Tooltip trigger={"axis"} />
+      <Legend />
+      <Series type={"line"} />
+      <Series type={"line"} />
+      <Series type={"line"} />
+      <Dataset dimensions={dimensions} source={data} />
+      <MethodResize resize />
+      <Event
+        eventName={"click"}
+        eventHandler={(e) => {
+          console.log("click event=", e);
+        }}
+      />
+    </BaseChart>
+  );
+};
+
+const Demo3 = () => {
+  return (
     <Chart
       resize
       style={{ width: "100%", height: 400 }}
@@ -65,6 +98,7 @@ export const ChartDemo = () => {
       ChartDemo
       <Demo1 />
       <Demo2 />
+      <Demo3 />
     </div>
   );
 };
