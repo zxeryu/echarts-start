@@ -1,12 +1,29 @@
 # `react-bridge`
 
-> 集成各种 options；各种事件；以及 loading，resize 方法；
+> echarts react bridge
 
-## Demo1
-
-> 基础使用
+## Necessary
 
 ```
+1. window对象注入echarts. <script type="text/javascript" src="//cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script>
+2. 需要 "lodash": "^4.x", "react": "16.8+", "uuid": "^8.x"
+```
+
+## Install
+
+```
+yarn add @echarts-start/react-bridge
+```
+
+## Usage
+
+### common
+
+> 推荐使用
+
+```
+import { Chart, Dataset, Event, Legend, Series, Tooltip, XAxis, YAxis } from "@echarts-start/react-bridge";
+
 const data = [
   { product: "Matcha Latte", "2015": 43.3, "2016": 85.8, "2017": 93.7 },
   { product: "Milk Tea", "2015": 83.1, "2016": 73.4, "2017": 55.1 },
@@ -42,11 +59,38 @@ const Demo1 = () => {
 };
 ```
 
-## Demo2
+### base
+
+> 基础使用
+
+```
+import { BaseChart, Dataset, Event, Legend, Series, Tooltip, XAxis, YAxis, MethodLoading, Event } from "@echarts-start/react-bridge";
+ <BaseChart style={{ width: "100%", height: 400 }}>
+      <XAxis type={"category"} />
+      <YAxis />
+      <Tooltip trigger={"axis"} />
+      <Legend />
+      <Series type={"line"} />
+      <Series type={"line"} />
+      <Series type={"line"} />
+      <Dataset dimensions={dimensions} source={data} />
+      <MethodResize resize />
+      <Event
+        eventName={"click"}
+        eventHandler={(e) => {
+          console.log("click event=", e);
+        }}
+      />
+    </BaseChart>
+```
+
+### ref
 
 > 操作 chart 对象
 
-```$xslt
+```
+import { Chart } from "@echarts-start/react-bridge";
+
 const Demo2 = () => {
   return (
     <Chart
@@ -65,3 +109,5 @@ const Demo2 = () => {
   );
 };
 ```
+
+[详细 demo](https://github.com/zxeryu/echarts-start/tree/master/example/demo-react)
