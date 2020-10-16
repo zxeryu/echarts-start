@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.1.0...@echarts-start/vue-bridge@0.2.0) (2020-10-16)
+
+### Features
+
+- **vue-bridge:** add ChartEvents ([9db3e8e](https://github.com/zxeryu/echarts-start/commit/9db3e8e176bdd860be811f60a8a423d87a18dbae))
+
 # 0.1.0 (2020-10-15)
 
 ### Features
