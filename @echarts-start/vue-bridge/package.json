@@ -32,8 +32,7 @@
   "peerDependencies": {
     "@babel/runtime-corejs3": "*",
     "lodash": "^4.x",
-    "uuid": "^8.x",
-    "vue": "2.x"
+    "vue": "2.6.x"
   },
   "dependencies": {
     "@types/echarts": "4.6.5"

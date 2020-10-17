@@ -29,7 +29,7 @@ export default [
         extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx", ".vue"],
       }),
     ],
-    external: ["lodash", "vue", "uuid"],
+    external: ["lodash", "vue"],
   },
   {
     input: "../../.tmp/@echarts-start/vue-bridge/index.d.ts",

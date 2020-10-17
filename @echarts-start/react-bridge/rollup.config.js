@@ -27,7 +27,7 @@ export default [
         extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"],
       }),
     ],
-    external: ["lodash", "react", "uuid"],
+    external: ["lodash", "react"],
   },
   {
     input: "../../.tmp/@echarts-start/react-bridge/index.d.ts",
