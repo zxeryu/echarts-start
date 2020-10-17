@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.1.1...@echarts-start/react-bridge@0.2.2) (2020-10-17)
+
+### Bug Fixes
+
+- update md ([c2493ca](https://github.com/zxeryu/echarts-start/commit/c2493ca7436b2adbfeac72e8dcdb0ddc1c01a5e0))
+
+### Performance Improvements
+
+- custom options id ([9d29da8](https://github.com/zxeryu/echarts-start/commit/9d29da8dbd1cd42dc25a2b0c0721ee6797fa5526))
+
 # 0.1.0 (2020-10-05)
 
 ### Bug Fixes
