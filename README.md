@@ -67,3 +67,13 @@ $yarn start
 //vue demo
 $yarn start-v
 ```
+
+## step (开发思路)
+
+```
+1.echarts方法和属性转换为react、vue的组件化语法（已完成）
+2.支持单图表（已完成）
+3.支持多图表
+4.series抽象，如Line、Interval、Pie等
+5.兼容多种图表
+```
