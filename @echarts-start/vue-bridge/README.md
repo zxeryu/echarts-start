@@ -6,7 +6,7 @@
 
 ```
 1. window对象注入echart. <script type="text/javascript" src="//cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script>
-2. 需要 "lodash": "^4.x", "vue": "2.6.x", "uuid": "^8.x"
+2. 需要 "lodash": "^4.x", "vue": "2.6.x"
 ```
 
 ## Install
