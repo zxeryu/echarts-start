@@ -2,8 +2,8 @@ import { Component, Inject, Prop, Vue, Watch } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { EChartOption, VisualMap } from "echarts";
 import { CreateElement, VNode } from "vue";
-import { v4 as uuid } from "uuid";
 import { get } from "lodash";
+import { generateId } from "./util";
 
 @Component
 class BaseOption extends Vue {
@@ -11,7 +11,7 @@ class BaseOption extends Vue {
   //options key
   protected optionKey!: string;
 
-  private readonly uniqueId: string = uuid();
+  private readonly uniqueId: string = generateId();
 
   @Inject("updateOption") updateOption!: (option: EChartOption) => void;
 
@@ -21,7 +21,7 @@ class BaseOption extends Vue {
 
   refreshOption() {
     const propsData = this.$options.propsData;
-    const id = get(propsData, "id", this.uniqueId);
+    const id = get(propsData, "id", this.uniqueId + this.optionKey);
     if (this.optionKey === "extra") {
       this.updateOption({ ...propsData });
     } else {

@@ -36,6 +36,6 @@ export const shallowEqual = (objA: any, objB: any): boolean => {
   return true;
 };
 
-export const currentTimeAsId = () => {
-  return new Date().getTime().toString();
+export const generateId = () => {
+  return Number(Math.random().toString().substr(3, 3) + Date.now()).toString(36);
 };

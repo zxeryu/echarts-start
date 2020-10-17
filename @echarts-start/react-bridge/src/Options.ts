@@ -1,9 +1,8 @@
 import { useChartContext } from "./Chart";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { EChartOption, EChartTitleOption } from "echarts";
-import { v4 as uuid } from "uuid";
 import { get, isEqual, pick, omit } from "lodash";
-import { shallowEqual } from "./utils";
+import { generateId, shallowEqual } from "./utils";
 
 /**
  *
@@ -14,7 +13,7 @@ const createOption = <T>(key: string, deepCompareKeys?: string[]) => {
   return (props: T) => {
     const { updateOption } = useChartContext();
     const ref = useRef<T>(); //上一次update对象
-    const id = useMemo(() => get(props, "id", uuid()), []);
+    const id = useMemo(() => get(props, "id", generateId() + key), []);
 
     const compare = useCallback((objA: any, objB: any) => {
       if (deepCompareKeys) {
