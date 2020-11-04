@@ -16,13 +16,7 @@
       <Event eventName="click" :eventHandler="handleChartClick" />
     </BaseChart>
 
-    <Chart
-      style="width: 100%; height: 400px"
-      backgroundColor="rgba(0,0,0,0.1)"
-      :loading="loading"
-      :resize="true"
-      :onChartClick="handleChartClick"
-    >
+    <Chart style="width: 100%; height: 400px" backgroundColor="rgba(0,0,0,0.1)" :loading="loading" :resize="true">
       <XAxis type="category" />
       <YAxis />
       <Dataset :source="chartData" :dimensions="dimensions" />
@@ -31,6 +25,7 @@
       <Series type="line" />
       <Tooltip trigger="axis" />
       <Legend />
+      <Event eventName="click" :eventHandler="handleChartClick" />
     </Chart>
 
     <Chart style="width: 100%; height: 400px" :chartRef="handleChartInit" />

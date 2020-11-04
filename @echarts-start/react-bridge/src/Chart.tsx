@@ -2,7 +2,6 @@ import React, { createContext, HTMLAttributes, useCallback, useContext, useEffec
 import ECharts, { ECharts as IEChart, EChartOption } from "echarts";
 import { assign, has, forEach, noop, pick, omit, keys, size, get, isArray, some, map } from "lodash";
 import { ChartMethods, IChartMethodProps } from "./Methods";
-import { ChartEvents, EventFuncKeys, IChartEventProps } from "./Events";
 import { Extra, ExtraKeys, IExtraProps } from "./Options";
 import { COLOR_PLATE_24 } from "./theme";
 
@@ -181,12 +180,11 @@ export const Chart = ({
   children,
   //
   ...otherProps
-}: IBaseChart & IChartMethodProps & IChartEventProps & IExtraProps) => {
+}: IBaseChart & IChartMethodProps & IExtraProps) => {
   return (
-    <BaseChart {...omit(otherProps, [...EventFuncKeys, ...ExtraKeys])}>
+    <BaseChart {...omit(otherProps, ExtraKeys)}>
       {children}
       <ChartMethods loading={loading} resize={resize} />
-      <ChartEvents {...pick(otherProps, EventFuncKeys)} />
       <Extra color={COLOR_PLATE_24} {...pick(otherProps, ExtraKeys)} />
     </BaseChart>
   );

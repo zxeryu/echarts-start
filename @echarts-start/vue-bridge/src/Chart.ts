@@ -7,7 +7,6 @@ import { getECharts } from "./util";
 import { ChartMethodProps, ChartMethods } from "./Method";
 import { Extra, ExtraKeys, ExtraProps } from "./Options";
 import { COLOR_PLATE_24 } from "./theme";
-import { ChartEventsProps, EventFuncKeys, Event, EventFuncKeyMap } from "./Events";
 
 @Component
 class BaseChartProps extends Vue {
@@ -113,7 +112,7 @@ export class BaseChart extends BaseChartProps {
 }
 
 @Component
-export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps, ChartEventsProps) {
+export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) {
   render(createElement: CreateElement): VNode {
     return createElement(
       BaseChart,
@@ -123,15 +122,6 @@ export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps, 
       [
         createElement(ChartMethods, { props: pick(this.$options.propsData, ["resize", "loading"]) }),
         createElement(Extra, { props: { color: COLOR_PLATE_24, ...pick(this.$options.propsData, ExtraKeys) } }),
-        map(pick(this.$options.propsData, EventFuncKeys), (handler, funcName) =>
-          createElement(Event, {
-            props: {
-              key: funcName,
-              eventName: get(EventFuncKeyMap, funcName),
-              eventHandler: handler,
-            },
-          }),
-        ),
         this.$slots.default,
       ],
     );

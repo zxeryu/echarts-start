@@ -1,7 +1,6 @@
 import { Component, InjectReactive, Prop, Vue } from "vue-property-decorator";
 import { CreateElement, VNode } from "vue";
 import { ECharts as IEChart } from "echarts";
-import { map } from "lodash";
 
 export interface IChartMouseEvent {
   // 当前点击的图形元素所属的组件名称，
@@ -143,98 +142,4 @@ export class Event extends Vue {
   render(createElement: CreateElement): VNode {
     return createElement("");
   }
-}
-
-export const EventFuncKeyMap = {
-  onChartClick: "click",
-  onChartDbClick: "dblclick",
-  onChartMouseDown: "mousedown",
-  onChartMouseMove: "mousemove",
-  onChartMouseUp: "mouseup",
-  onChartMouseOver: "mouseover",
-  onChartMouseOut: "mouseout",
-  onChartGlobalOut: "globalout",
-  onChartContextMenu: "contextmenu",
-  onLegendSelectChanged: "legendselectchanged",
-  onLegendSelected: "legendselected",
-  onLegendUnSelected: "legendunselected",
-  onLegendSelectAll: "legendselectall",
-  onLegendInverseSelect: "legendinverseselect",
-  onLegendScroll: "legendscroll",
-  onDataZoom: "datazoom",
-  onDataRangeSelected: "datarangeselected",
-  onTimelineChanged: "timelinechanged",
-  onTimelinePlayChanged: "timelineplaychanged",
-  onRestore: "restore",
-  onDataViewChanged: "dataviewchanged",
-  onMagicTypeChanged: "magictypechanged",
-  onGeoSelectChanged: "geoselectchanged",
-  onGeoSelected: "geoselected",
-  onGeoUnSelected: "geounselected",
-  onPieSelectChanged: "pieselectchanged",
-  onPieSelected: "pieselected",
-  onPieUnSelected: "pieunselected",
-  onMapSelectChanged: "mapselectchanged",
-  onMapSelected: "mapselected",
-  onMapUnSelected: "mapunselected",
-  onAxisAreaSelected: "axisareaselected",
-  onFocusNodeAdjacency: "focusnodeadjacency",
-  onUnFocusNodeAdjacency: "unfocusnodeadjacency",
-  onBrush: "brush",
-  onBrushEnd: "brushEnd",
-  onBrushSelected: "brushselected",
-  onGlobalCursorTaken: "globalcursortaken",
-  onRendered: "rendered",
-  onFinished: "finished",
-};
-
-export const EventFuncKeys = map(EventFuncKeyMap, (_, k) => k);
-
-@Component
-export class ChartEventsProps extends Vue {
-  //mouse
-  @Prop() onChartClick?: (e: IChartMouseEvent) => void;
-  @Prop() onChartDbClick?: (e: IChartMouseEvent) => void;
-  @Prop() onChartMouseDown?: (e: IChartMouseEvent) => void;
-  @Prop() onChartMouseMove?: (e: IChartMouseEvent) => void;
-  @Prop() onChartMouseUp?: (e: IChartMouseEvent) => void;
-  @Prop() onChartMouseOver?: (e: IChartMouseEvent) => void;
-  @Prop() onChartMouseOut?: (e: IChartMouseEvent) => void;
-  @Prop() onChartGlobalOut?: (e: IChartMouseEvent) => void;
-  @Prop() onChartContextMenu?: (e: IChartMouseEvent) => void;
-  //
-  @Prop() onLegendSelectChanged?: (e: ILegendEvent) => void;
-  @Prop() onLegendSelected?: (e: ILegendEvent) => void;
-  @Prop() onLegendUnSelected?: (e: ILegendEvent) => void;
-  @Prop() onLegendSelectAll?: (e: ILegendEvent) => void;
-  @Prop() onLegendInverseSelect?: (e: ILegendEvent) => void;
-  @Prop() onLegendScroll?: (e: IChartEvent["legendscroll"]) => void;
-  //
-  @Prop() onDataZoom?: (e: IDataZoomEvent) => void;
-  @Prop() onDataRangeSelected?: (e: IChartEvent["datarangeselected"]) => void;
-  @Prop() onTimelineChanged?: (e: IChartEvent["timelinechanged"]) => void;
-  @Prop() onTimelinePlayChanged?: (e: IChartEvent["timelineplaychanged"]) => void;
-  @Prop() onRestore?: (e: IChartEvent["restore"]) => void;
-  @Prop() onDataViewChanged?: (e: IChartEvent["dataviewchanged"]) => void;
-  @Prop() onMagicTypeChanged?: (e: IChartEvent["magictypechanged"]) => void;
-  //
-  @Prop() onGeoSelectChanged?: (e: ISeriesEvent) => void;
-  @Prop() onGeoSelected?: (e: ISeriesEvent) => void;
-  @Prop() onGeoUnSelected?: (e: ISeriesEvent) => void;
-  @Prop() onPieSelectChanged?: (e: ISeriesEvent) => void;
-  @Prop() onPieSelected?: (e: ISeriesEvent) => void;
-  @Prop() onPieUnSelected?: (e: ISeriesEvent) => void;
-  @Prop() onMapSelectChanged?: (e: ISeriesEvent) => void;
-  @Prop() onMapSelected?: (e: ISeriesEvent) => void;
-  @Prop() onMapUnSelected?: (e: ISeriesEvent) => void;
-  //
-  @Prop() onAxisAreaSelected?: () => void;
-  @Prop() onFocusNodeAdjacency?: () => void;
-  @Prop() onUnFocusNodeAdjacency?: () => void;
-  @Prop() onBrush?: () => void;
-  @Prop() onBrushEnd?: () => void;
-  @Prop() onBrushSelected?: (e: any) => void;
-  @Prop() onGlobalCursorTaken?: (e: any) => void;
-  @Prop() onRendered?: () => void;
-  @Prop() onFinished?: () => void;
 }

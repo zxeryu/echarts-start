@@ -28,13 +28,7 @@ const Demo1 = () => {
       <a href={"#"} onClick={() => setLoading((prevState) => !prevState)}>
         toggle loading
       </a>
-      <Chart
-        style={{ width: "100%", height: 400 }}
-        resize
-        loading={loading}
-        onChartClick={(e) => {
-          console.log("click event=", e);
-        }}>
+      <Chart style={{ width: "100%", height: 400 }} resize loading={loading}>
         <XAxis type={"category"} />
         <YAxis />
         <Tooltip trigger={"axis"} />
@@ -43,6 +37,12 @@ const Demo1 = () => {
         <Series type={"line"} />
         <Series type={"line"} />
         <Dataset dimensions={dimensions} source={data} />
+        <Event
+          eventName={"click"}
+          eventHandler={(e) => {
+            console.log("click event=", e);
+          }}
+        />
       </Chart>
     </div>
   );
@@ -84,9 +84,6 @@ const Demo3 = () => {
           series: [{ type: "line" }, { type: "line" }, { type: "line" }],
           dataset: { dimensions, source: data },
         });
-      }}
-      onChartClick={(e) => {
-        console.log("click event=", e);
       }}
     />
   );
