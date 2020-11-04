@@ -120,12 +120,12 @@ export interface IChartEvent {
   finished: undefined;
 }
 
-export const Event = ({
+export const Event = <T extends keyof IChartEvent>({
   eventName,
   eventHandler,
 }: {
-  eventName: keyof IChartEvent;
-  eventHandler?: (_: any) => void;
+  eventName: T;
+  eventHandler?: (_: IChartEvent[T]) => void;
 }) => {
   const { chart } = useChartContext();
   useEffect(() => {
