@@ -18,14 +18,17 @@ class BaseChartProps extends Vue {
     height?: number | string;
   };
   @Prop() chartRef?: (chartRef: IEChart) => void;
+  @Prop() noCoordinate?: boolean; //是否需要坐标轴
 }
 
 @Component
 export class BaseChart extends BaseChartProps {
   @Ref("chartDiv") chartDiv!: HTMLDivElement;
 
-  private xAxis: EChartOption | undefined;
-  private yAxis: EChartOption | undefined;
+  private xAxis: EChartOption[] = [];
+  private yAxis: EChartOption[] = [];
+  private grid: EChartOption[] = [];
+  private isHaveGrid = false;
   private list: EChartOption[] = [];
 
   @ProvideReactive("chart") chart: IEChart | undefined = undefined;
@@ -81,23 +84,55 @@ export class BaseChart extends BaseChartProps {
     if (!this.chart) {
       return;
     }
+
+    if (this.noCoordinate) {
+      console.log("###################", option);
+      this.setOption(this.chart, option);
+      return;
+    }
     const oldOption = this.chart.getOption();
     if (!has(oldOption, "xAxis") || !has(oldOption, "yAxis")) {
-      if (!this.xAxis && has(option, "xAxis")) {
-        //保存第一个xAxis
-        this.xAxis = option;
-      } else if (!this.yAxis && has(option, "yAxis")) {
-        //保存第一个yAxis
-        this.yAxis = option;
+      if (has(option, "xAxis")) {
+        //保存xAxis
+        this.xAxis.push(option);
+        this.isHaveGrid = this.isHaveGrid || has(option, ["xAxis", "gridIndex"]);
+      } else if (has(option, "yAxis")) {
+        //保存第yAxis
+        this.yAxis.push(option);
+        this.isHaveGrid = this.isHaveGrid || has(option, ["yAxis", "gridIndex"]);
+      } else if (has(option, "grid")) {
+        this.grid.push(option);
       } else {
         //保存option
         this.list.push(option);
       }
-      if (this.xAxis && this.yAxis) {
-        this.chart.setOption(assign(this.xAxis, this.yAxis));
+
+      let isPrepared = false;
+      if (this.isHaveGrid) {
+        const xSize = size(this.xAxis);
+        if (xSize > 0 && xSize === size(this.yAxis) && xSize === size(this.grid)) {
+          forEach(this.xAxis, (_, i) => {
+            this.chart?.setOption(assign({}, this.xAxis[i], this.yAxis[i], this.grid[i]));
+          });
+          isPrepared = true;
+        }
+      } else {
+        const xSize = size(this.xAxis);
+        if (xSize > 0 && xSize === size(this.yAxis)) {
+          forEach(this.xAxis, (_, i) => {
+            this.chart?.setOption(assign({}, this.xAxis[i], this.yAxis[i]));
+          });
+          isPrepared = true;
+        }
+      }
+
+      if (isPrepared) {
         forEach(this.list, (item) => {
           this.chart && this.setOption(this.chart, item);
         });
+        this.xAxis = [];
+        this.yAxis = [];
+        this.grid = [];
         this.list = [];
       }
     } else {
@@ -117,7 +152,7 @@ export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) 
     return createElement(
       BaseChart,
       {
-        props: pick(this.$options.propsData, ["theme", "opts", "chartRef"]),
+        props: pick(this.$options.propsData, ["theme", "opts", "chartRef", "noCoordinate"]),
       },
       [
         createElement(ChartMethods, { props: pick(this.$options.propsData, ["resize", "loading"]) }),

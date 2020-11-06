@@ -1,6 +1,6 @@
 import { Component, Inject, Prop, Vue, Watch } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
-import { EChartOption, VisualMap } from "echarts";
+import { EChartOption, VisualMap as IVisualMap } from "echarts";
 import { CreateElement, VNode } from "vue";
 import { get } from "lodash";
 import { generateId } from "./util";
@@ -273,7 +273,7 @@ export class Title extends BaseOption {
 }
 
 @Component
-export class DataZoomInside extends BaseOption {
+export class DataZoom extends BaseOption {
   @Prop() type?: string;
   @Prop() id?: string;
   @Prop() disabled?: boolean;
@@ -300,13 +300,6 @@ export class DataZoomInside extends BaseOption {
   @Prop() moveOnMouseWheel?: boolean;
   @Prop() preventDefaultMouseMove?: boolean;
 
-  optionKey = "dataZoom";
-}
-
-@Component
-export class DataZoomSlider extends BaseOption {
-  @Prop() type?: string;
-  @Prop() id?: string;
   @Prop() show?: boolean;
   @Prop() backgroundColor?: string;
   @Prop() dataBackground?: object;
@@ -321,24 +314,6 @@ export class DataZoomSlider extends BaseOption {
   @Prop() showDataShadow?: string;
   @Prop() realtime?: boolean;
   @Prop() textStyle?: EChartOption.BaseTextStyle;
-  @Prop() xAxisIndex?: number | number[];
-  @Prop() yAxisIndex?: number | number[];
-  @Prop() radiusAxisIndex?: number | number[];
-  @Prop() angleAxisIndex?: number | number[];
-  @Prop() singleAxisIndex?: number | number[];
-  @Prop() filterMode?: "filter" | "weakFilter" | "empty" | "none";
-  @Prop() start?: number;
-  @Prop() end?: number;
-  @Prop() startValue?: number | string | Date;
-  @Prop() endValue?: number | string | Date;
-  @Prop() minSpan?: number;
-  @Prop() maxSpan?: number;
-  @Prop() minValueSpan?: number | string | Date;
-  @Prop() maxValueSpan?: number | string | Date;
-  @Prop() orient?: "vertical" | "horizontal";
-  @Prop() zoomLock?: boolean;
-  @Prop() throttle?: number;
-  @Prop() rangeMode?: string[];
   @Prop() zlevel?: number;
   @Prop() z?: number;
   @Prop() left?: string | number;
@@ -350,8 +325,8 @@ export class DataZoomSlider extends BaseOption {
 }
 
 @Component
-export class VisualMapContinuous extends BaseOption {
-  @Prop() type?: "continuous";
+export class VisualMap extends BaseOption {
+  @Prop() type?: "continuous" | "piecewise";
   @Prop() id?: string;
   @Prop() min?: number;
   @Prop() max?: number;
@@ -364,15 +339,15 @@ export class VisualMapContinuous extends BaseOption {
   @Prop() itemHeight?: number;
   @Prop() align?: "auto" | "left" | "right" | "top" | "bottom";
   @Prop() text?: string[];
-  @Prop() textGap?: number;
+  @Prop() textGap?: number | number[];
   @Prop() show?: boolean;
   @Prop() dimension?: string | number;
   @Prop() seriesIndex?: number | number[];
   @Prop() hoverLink?: boolean;
-  @Prop() @Prop() outOfRange?: VisualMap.RangeObject;
+  @Prop() @Prop() outOfRange?: IVisualMap.RangeObject;
   @Prop() controller?: {
-    inRange?: VisualMap.RangeObject;
-    outOfRange?: VisualMap.RangeObject;
+    inRange?: IVisualMap.RangeObject;
+    outOfRange?: IVisualMap.RangeObject;
   };
   @Prop() zlevel?: number;
   @Prop() z?: number;
@@ -389,54 +364,16 @@ export class VisualMapContinuous extends BaseOption {
   @Prop() textStyle?: EChartOption.BaseTextStyleWithRich;
   @Prop() formatter?: string | Function;
 
-  optionKey = "visualMap";
-}
-
-@Component
-export class VisualMapPiecewise extends BaseOption {
-  @Prop() type?: "piecewise";
-  @Prop() id?: string;
   @Prop() splitNumber?: number;
-  @Prop() pieces?: VisualMap.PiecesObject[];
+  @Prop() pieces?: IVisualMap.PiecesObject[];
   @Prop() categories?: string[];
-  @Prop() min?: number;
-  @Prop() max?: number;
   @Prop() minOpen?: boolean;
   @Prop() maxOpen?: boolean;
   @Prop() selectedMode?: "multiple" | "single";
-  @Prop() inverse?: boolean;
-  @Prop() precision?: number;
-  @Prop() itemWidth?: number;
-  @Prop() itemHeight?: number;
-  @Prop() align?: "auto" | "left" | "right";
-  @Prop() text?: string[];
-  @Prop() textGap?: number | number[];
   @Prop() showLabel?: boolean;
   @Prop() itemGap?: number;
   @Prop() itemSymbol?: string;
-  @Prop() show?: boolean;
-  @Prop() dimension?: string | number;
-  @Prop() seriesIndex?: number | number[];
-  @Prop() hoverLink?: boolean;
-  @Prop() inRange?: VisualMap.RangeObject;
-  @Prop() outOfRange?: VisualMap.RangeObject;
-  @Prop() controller?: {
-    inRange?: VisualMap.RangeObject;
-    outOfRange?: VisualMap.RangeObject;
-  };
-  @Prop() zlevel?: number;
-  @Prop() z?: number;
-  @Prop() left?: number | string;
-  @Prop() top?: number | string;
-  @Prop() right?: number | string;
-  @Prop() bottom?: number | string;
-  @Prop() orient?: "vertical" | "horizontal";
-  @Prop() padding?: number | number[];
-  @Prop() backgroundColor?: string;
-  @Prop() @Prop() borderWidth?: number;
-  @Prop() color?: string[];
-  @Prop() textStyle?: EChartOption.TextStyle;
-  @Prop() formatter?: string | Function;
+  @Prop() inRange?: IVisualMap.RangeObject;
 
   optionKey = "visualMap";
 }
