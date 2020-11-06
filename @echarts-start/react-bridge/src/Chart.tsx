@@ -35,6 +35,7 @@ export interface IBaseChart extends Omit<HTMLAttributes<HTMLDivElement>, "color"
     width?: number | string;
     height?: number | string;
   };
+  noCoordinate?: boolean; //是否需要坐标轴
 }
 
 export const BaseChart = ({
@@ -42,6 +43,7 @@ export const BaseChart = ({
   //echarts init func
   theme,
   opts,
+  noCoordinate = false,
   //
   children,
   //div
@@ -49,15 +51,19 @@ export const BaseChart = ({
 }: IBaseChart) => {
   const ref = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<{
-    //为了解决options不存在xAxis或yAxis时侯的报错问题
-    xAxis: EChartOption | undefined; //存储添加的第一个xAxis
-    yAxis: EChartOption | undefined; //存储添加的第一个yAxis
-    list: EChartOption[]; //存储在未添加xAxis和yAxis时的其他options
+    //初始options必须要有xAxis，yAxis（如果使用grid，那gird也是必须的）
+    xAxis: EChartOption[]; //存储xAxis
+    yAxis: EChartOption[]; //存储yAxis
+    grid: EChartOption[]; //存储grid
+    list: EChartOption[]; //存储在未添加xAxis，yAxis（grid）时的其他options
+    isHaveGrid: boolean; //是否包含grid
     options: EChartOption; //真正的options对象， form chart.getOption
   }>({
-    xAxis: undefined,
-    yAxis: undefined,
+    xAxis: [],
+    yAxis: [],
+    grid: [],
     list: [],
+    isHaveGrid: false,
     options: {},
   });
   const [chart, setChart] = useState<IEChart>();
@@ -136,23 +142,56 @@ export const BaseChart = ({
       if (!chart) {
         return;
       }
+      //不需要坐标轴
+      if (noCoordinate) {
+        setOption(chart, option);
+        return;
+      }
       const oldOption = chart.getOption();
       if (!has(oldOption, "xAxis") || !has(oldOption, "yAxis")) {
-        if (!optionsRef.current.xAxis && has(option, "xAxis")) {
-          //保存第一个xAxis
-          optionsRef.current.xAxis = option;
-        } else if (!optionsRef.current.yAxis && has(option, "yAxis")) {
-          //保存第一个yAxis
-          optionsRef.current.yAxis = option;
+        if (has(option, "xAxis")) {
+          //保存xAxis
+          optionsRef.current.xAxis.push(option);
+          optionsRef.current.isHaveGrid = optionsRef.current.isHaveGrid || has(option, ["xAxis", "gridIndex"]);
+        } else if (has(option, "yAxis")) {
+          //保存第yAxis
+          optionsRef.current.yAxis.push(option);
+          optionsRef.current.isHaveGrid = optionsRef.current.isHaveGrid || has(option, ["yAxis", "gridIndex"]);
+        } else if (has(option, "grid")) {
+          optionsRef.current.grid.push(option);
         } else {
           //保存option
           optionsRef.current.list.push(option);
         }
-        if (optionsRef.current.xAxis && optionsRef.current.yAxis) {
-          chart.setOption(assign(optionsRef.current.xAxis, optionsRef.current.yAxis));
+
+        let isPrepared = false;
+
+        if (optionsRef.current.isHaveGrid) {
+          const xSize = size(optionsRef.current.xAxis);
+          if (xSize > 0 && xSize === size(optionsRef.current.yAxis) && xSize === size(optionsRef.current.grid)) {
+            forEach(optionsRef.current.xAxis, (_, i) => {
+              chart.setOption(
+                assign({}, optionsRef.current.xAxis[i], optionsRef.current.yAxis[i], optionsRef.current.grid[i]),
+              );
+            });
+            isPrepared = true;
+          }
+        } else {
+          const xSize = size(optionsRef.current.xAxis);
+          if (xSize > 0 && xSize === size(optionsRef.current.yAxis)) {
+            forEach(optionsRef.current.xAxis, (_, i) => {
+              chart.setOption(assign({}, optionsRef.current.xAxis[i], optionsRef.current.yAxis[i]));
+            });
+            isPrepared = true;
+          }
+        }
+        if (isPrepared) {
           forEach(optionsRef.current.list, (item) => {
             setOption(chart, item);
           });
+          optionsRef.current.xAxis = [];
+          optionsRef.current.yAxis = [];
+          optionsRef.current.grid = [];
           optionsRef.current.list = [];
         }
       } else {
