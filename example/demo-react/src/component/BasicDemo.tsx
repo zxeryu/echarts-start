@@ -10,7 +10,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "../../../../@echarts-start/react-bridge/src";
+} from "@echarts-start/react-bridge";
 
 const data = [
   { product: "Matcha Latte", "2015": 43.3, "2016": 85.8, "2017": 93.7 },

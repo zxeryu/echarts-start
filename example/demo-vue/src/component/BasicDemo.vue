@@ -2,69 +2,42 @@
   <div>
     <button @click="handleLoadingClick">toggle loading</button>
     <button @click="handleChange">change</button>
-    <BaseChart style="width: 100%; height: 400px">
-      <XAxis type="category" />
-      <YAxis />
-      <Dataset :source="chartData" :dimensions="dimensions" />
-      <Series type="line" />
-      <Series type="line" />
-      <Series type="line" />
-      <Tooltip trigger="axis" />
-      <Legend />
-      <MethodLoading :loading="loading" />
-      <MethodResize :resize="true" />
-      <Event eventName="click" :eventHandler="handleChartClick" />
-    </BaseChart>
+    <c-base-chart style="width: 100%; height: 400px">
+      <c-x-axis type="category" />
+      <c-y-axis />
+      <c-dataset :source="chartData" :dimensions="dimensions" />
+      <c-series type="line" />
+      <c-series type="line" />
+      <c-series type="line" />
+      <c-tooltip trigger="axis" />
+      <c-legend />
+      <c-method-loading :loading="loading" />
+      <c-method-resize :resize="true" />
+      <c-event eventName="click" :eventHandler="handleChartClick" />
+    </c-base-chart>
 
-    <Chart style="width: 100%; height: 400px" backgroundColor="rgba(0,0,0,0.1)" :loading="loading" :resize="true">
-      <XAxis type="category" />
-      <YAxis />
-      <Dataset :source="chartData" :dimensions="dimensions" />
-      <Series type="line" />
-      <Series type="line" />
-      <Series type="line" />
-      <Tooltip trigger="axis" />
-      <Legend />
-      <Event eventName="click" :eventHandler="handleChartClick" />
-    </Chart>
+    <c-chart style="width: 100%; height: 400px" backgroundColor="rgba(0,0,0,0.1)" :loading="loading" :resize="true">
+      <c-x-axis type="category" />
+      <c-y-axis />
+      <c-dataset :source="chartData" :dimensions="dimensions" />
+      <c-series type="line" />
+      <c-series type="line" />
+      <c-series type="line" />
+      <c-tooltip trigger="axis" />
+      <c-legend />
+      <c-event eventName="click" :eventHandler="handleChartClick" />
+    </c-chart>
 
-    <Chart style="width: 100%; height: 400px" :chartRef="handleChartInit" />
+    <c-chart style="width: 100%; height: 400px" :chartRef="handleChartInit" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import {
-  BaseChart,
-  XAxis,
-  YAxis,
-  Dataset,
-  Series,
-  Tooltip,
-  Legend,
-  MethodLoading,
-  MethodResize,
-  Event,
-  IChartMouseEvent,
-  Chart,
-} from "@echarts-start/vue-bridge";
+import { IChartMouseEvent } from "@echarts-start/vue-bridge";
 import { ECharts as IEChart } from "echarts";
 
-@Component({
-  components: {
-    BaseChart,
-    XAxis,
-    YAxis,
-    Dataset,
-    Series,
-    Tooltip,
-    Legend,
-    MethodLoading,
-    MethodResize,
-    Event,
-    Chart,
-  },
-})
+@Component
 export default class ChartDemo extends Vue {
   loading: boolean = false;
   dimensions = ["product", "2015", "2016", "2017"];
