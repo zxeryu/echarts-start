@@ -86,7 +86,6 @@ export class BaseChart extends BaseChartProps {
     }
 
     if (this.noCoordinate) {
-      console.log("###################", option);
       this.setOption(this.chart, option);
       return;
     }

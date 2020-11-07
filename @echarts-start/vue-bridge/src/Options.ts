@@ -1,8 +1,8 @@
 import { Component, Inject, Prop, Vue, Watch } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
-import { EChartOption, VisualMap as IVisualMap } from "echarts";
+import { EChartOption, VisualMap as IVisualMap, EChartTitleOption } from "echarts";
 import { CreateElement, VNode } from "vue";
-import { get } from "lodash";
+import { get, omit } from "lodash";
 import { generateId } from "./util";
 
 @Component
@@ -22,10 +22,15 @@ class BaseOption extends Vue {
   refreshOption() {
     const propsData = this.$options.propsData;
     const id = get(propsData, "id", this.uniqueId + this.optionKey);
+    const target = get(propsData, this.optionKey);
     if (this.optionKey === "extra") {
       this.updateOption({ ...propsData });
     } else {
-      this.updateOption({ [this.optionKey]: { ...propsData, id } });
+      if (target) {
+        this.updateOption({ [this.optionKey]: { ...omit(propsData, this.optionKey), ...target, id } });
+      } else {
+        this.updateOption({ [this.optionKey]: { ...propsData, id } });
+      }
     }
   }
 
@@ -71,16 +76,30 @@ class BaseAxis extends BaseOption {
 export class XAxis extends BaseAxis {
   @Prop() position?: "top" | "bottom";
   @Prop() type?: EChartOption.BasicComponents.CartesianAxis.Type;
+  //watch
+  @Prop() xAxis?: EChartOption.XAxis;
 
   optionKey = "xAxis";
+
+  @Watch("xAxis")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
 export class YAxis extends BaseAxis {
   @Prop() position?: "left" | "right";
   @Prop() type?: EChartOption.BasicComponents.CartesianAxis.Type;
+  //watch
+  @Prop() yAxis?: EChartOption.YAxis;
 
   optionKey = "yAxis";
+
+  @Watch("yAxis")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -103,36 +122,21 @@ export class Dataset extends BaseOption {
 
 @Component
 export class Series extends BaseOption {
-  @Prop() type?:
-    | "line"
-    | "bar"
-    | "pie"
-    | "scatter"
-    | "effectScatter"
-    | "radar"
-    | "tree"
-    | "treemap"
-    | "sunburst"
-    | "boxplot"
-    | "candlestick"
-    | "heatmap"
-    | "map"
-    | "parallel"
-    | "lines"
-    | "graph"
-    | "sankey"
-    | "funnel"
-    | "gauge"
-    | "pictorialBar"
-    | "themeRiver"
-    | "custom";
+  @Prop() type?: string;
   @Prop() seriesLayoutBy?: "row" | "column";
   @Prop() xAxisIndex?: number;
   @Prop() yAxisIndex?: number;
   @Prop() dimensions?: string[] | EChartOption.Dataset.DimensionObject[];
   @Prop() encode?: object;
+  //series 兼容方案
+  @Prop() series?: EChartOption.Series;
 
   optionKey = "series";
+
+  @Watch("series")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -159,8 +163,15 @@ export class Tooltip extends BaseOption {
   @Prop() renderMode?: "html";
   @Prop() confine?: boolean;
   @Prop() transitionDuration?: number;
+  //watch
+  @Prop() tooltip?: EChartOption.Tooltip;
 
   optionKey = "tooltip";
+
+  @Watch("tooltip")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -211,7 +222,15 @@ export class Legend extends BaseOption {
   @Prop() animation?: boolean;
   @Prop() animationDurationUpdate?: number;
 
+  //watch
+  @Prop() legend?: EChartOption.Legend;
+
   optionKey = "legend";
+
+  @Watch("legend")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -235,7 +254,15 @@ export class Grid extends BaseOption {
   @Prop() shadowOffsetY?: number;
   @Prop() tooltip?: EChartOption.Tooltip;
 
+  //watch
+  @Prop() grid?: EChartOption.Grid;
+
   optionKey = "grid";
+
+  @Watch("grid")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -269,7 +296,15 @@ export class Title extends BaseOption {
   @Prop() shadowOffsetX?: number;
   @Prop() shadowOffsetY?: number;
 
+  //watch
+  @Prop() title?: EChartTitleOption;
+
   optionKey = "title";
+
+  @Watch("title")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -321,7 +356,15 @@ export class DataZoom extends BaseOption {
   @Prop() right?: string | number;
   @Prop() bottom?: string | number;
 
+  //watch
+  @Prop() dataZoom?: EChartOption.DataZoom;
+
   optionKey = "dataZoom";
+
+  @Watch("dataZoom")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -375,7 +418,15 @@ export class VisualMap extends BaseOption {
   @Prop() itemSymbol?: string;
   @Prop() inRange?: IVisualMap.RangeObject;
 
+  //watch
+  @Prop() visualMap?: EChartOption.VisualMap;
+
   optionKey = "visualMap";
+
+  @Watch("visualMap")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -414,7 +465,15 @@ export class Calendar extends BaseOption {
   @Prop() link?: object[];
   @Prop() triggerOn?: "mousemove" | "click" | "mousemove|click" | "none";
 
-  optionKey = "axisPointer";
+  //watch
+  @Prop() calendar?: EChartOption.Calendar;
+
+  optionKey = "calendar";
+
+  @Watch("calendar")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -450,7 +509,15 @@ export class AxisPointer extends BaseOption {
   @Prop() yearLabel?: EChartOption.Calendar.YearLabel;
   @Prop() silent?: boolean;
 
-  optionKey = "calendar";
+  //watch
+  @Prop() axisPointer?: EChartOption.AxisPointer;
+
+  optionKey = "axisPointer";
+
+  @Watch("axisPointer")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 @Component
@@ -483,7 +550,15 @@ export class TextStyle extends BaseOption {
   @Prop() shadowOffsetX?: number;
   @Prop() shadowOffsetY?: number;
 
+  //watch
+  @Prop() textStyle?: EChartOption.TextStyle;
+
   optionKey = "textStyle";
+
+  @Watch("textStyle")
+  onChange() {
+    this.refreshOption();
+  }
 }
 
 export const ExtraKeys = [
