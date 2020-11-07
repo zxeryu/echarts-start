@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.2.2...@echarts-start/react-bridge@0.2.3) (2020-11-07)
+
+### Performance Improvements
+
+- **react-bridge:** support multi charts ([96f8f3f](https://github.com/zxeryu/echarts-start/commit/96f8f3f7393a60fade2afc9cdae69c466a6fb0f3))
+
 ## [0.2.2](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.1.1...@echarts-start/react-bridge@0.2.2) (2020-10-17)
 
 ### Bug Fixes

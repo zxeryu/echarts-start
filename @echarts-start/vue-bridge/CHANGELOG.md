@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.2.2...@echarts-start/vue-bridge@0.2.3) (2020-11-07)
+
+### Performance Improvements
+
+- **vue-bridge:** support multi charts ([e72fcfc](https://github.com/zxeryu/echarts-start/commit/e72fcfc0aa095b3c76dcea77e14d664c6e525802))
+- **vue-bridge:** support reactive ([cccd416](https://github.com/zxeryu/echarts-start/commit/cccd4167f15bf34232af1e6b9587314e8284bb75))
+
 ## [0.2.2](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.2.0...@echarts-start/vue-bridge@0.2.2) (2020-10-17)
 
 ### Performance Improvements
