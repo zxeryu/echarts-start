@@ -97,4 +97,23 @@ import { Chart } from "@echarts-start/vue-bridge";
   }
 ```
 
+## props && 响应
+
+> series props 兼容；
+
+```
+series有多个类型，且每个类型有多个属性，每个属性都注册的话，打包后的代码会特别大。
+现有属性只支持dataset模式；
+其他属性需要写入series对象；
+```
+
+> options 数据响应设计；
+
+```vue
+需要响应的属性要写入对应名字的对象中，如：
+<c-series type="line" :series="{ data: [] }" />
+其中data就是响应属性，其他options组件一样如此。换句话说，所有的属性写入响应对象也是完全可以的。
+ps：dataset的source和dimensions是支持响应的。
+```
+
 [详细 demo](https://github.com/zxeryu/echarts-start/tree/master/example/demo-vue)
