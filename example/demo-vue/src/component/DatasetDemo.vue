@@ -72,16 +72,57 @@
       <c-legend />
       <c-tooltip />
       <c-dataset :source="data3" />
-      <c-series type="pie" :radius="60" :center="['25%', '30%']" />
-      <c-series type="pie" :radius="60" :center="['75%', '30%']" :encode="{ itemName: 'product', value: '2013' }" />
-      <c-series type="pie" :radius="60" :center="['25%', '75%']" :encode="{ itemName: 'product', value: '2014' }" />
-      <c-series type="pie" :radius="60" :center="['75%', '75%']" :encode="{ itemName: 'product', value: '2015' }" />
+      <c-series type="pie" :series="{ radius: 60, center: ['25%', '30%'] }" />
+      <c-series
+        type="pie"
+        :series="{ radius: 60, center: ['75%', '30%'] }"
+        :encode="{ itemName: 'product', value: '2013' }"
+      />
+      <c-series
+        type="pie"
+        :series="{ radius: 60, center: ['25%', '75%'] }"
+        :encode="{ itemName: 'product', value: '2014' }"
+      />
+      <c-series
+        type="pie"
+        :series="{ radius: 60, center: ['75%', '75%'] }"
+        :encode="{ itemName: 'product', value: '2015' }"
+      />
     </c-chart>
     <div>其他</div>
+    <c-chart style="width: 70%; height: 800px">
+      <c-legend />
+      <c-tooltip trigger="axis" :showContent="true" />
+      <c-dataset :source="data3" />
+      <c-x-axis type="category" />
+      <c-y-axis :gridIndex="0" />
+      <c-grid top="55%" />
+      <c-series type="line" seriesLayoutBy="row" :series="{ smooth: true }" />
+      <c-series type="line" seriesLayoutBy="row" :series="{ smooth: true }" />
+      <c-series type="line" seriesLayoutBy="row" :series="{ smooth: true }" />
+      <c-series type="line" seriesLayoutBy="row" :series="{ smooth: true }" />
+      <c-series
+        id="pie"
+        type="pie"
+        :encode="{
+          itemName: 'product',
+          value: year,
+          tooltip: year,
+        }"
+        :series="{
+          radius: '30%',
+          center: ['50%', '25%'],
+          label: {
+            formatter: `{b}: {@${year}} ({d}%)`,
+          },
+        }"
+      />
+      <c-event eventName="updateAxisPointer" :eventHandler="onEvent" />
+    </c-chart>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class DatasetDemo extends Vue {
@@ -113,5 +154,21 @@ export default class DatasetDemo extends Vue {
     ["Cheese Cocoa", 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
     ["Walnut Brownie", 55.2, 67.1, 69.2, 72.4, 53.9, 39.1],
   ];
+
+  private year: string = "2012";
+
+  data() {
+    return {
+      year: "2012",
+    };
+  }
+
+  onEvent(event: any) {
+    const xAxisInfo = event.axesInfo[0];
+    if (xAxisInfo) {
+      const dimension = xAxisInfo.value + 1;
+      this.year = dimension;
+    }
+  }
 }
 </script>
