@@ -602,3 +602,147 @@ export class ExtraProps extends Vue {
 export class Extra extends mixins(BaseOption, ExtraProps) {
   optionKey = "extra";
 }
+
+@Component
+export class Toolbox extends BaseOption {
+  @Prop() toolbox?: object;
+
+  optionKey = "toolbox";
+
+  @Watch("toolbox")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Brush extends BaseOption {
+  @Prop() brush?: object;
+
+  optionKey = "brush";
+
+  @Watch("brush")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Geo extends BaseOption {
+  @Prop() geo?: object;
+
+  optionKey = "geo";
+
+  @Watch("geo")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class SingleAxis extends BaseOption {
+  @Prop() toolbox?: object;
+
+  optionKey = "singleAxis";
+
+  @Watch("toolbox")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Timeline extends BaseOption {
+  @Prop() timeline?: object;
+
+  optionKey = "timeline";
+
+  @Watch("timeline")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Graphic extends BaseOption {
+  @Prop() graphic?: object;
+
+  optionKey = "graphic";
+
+  @Watch("graphic")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Polar extends BaseOption {
+  @Prop() polar?: object;
+
+  optionKey = "polar";
+
+  @Watch("polar")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class RadiusAxis extends BaseOption {
+  @Prop() radiusAxis?: object;
+
+  optionKey = "radiusAxis";
+
+  @Watch("radiusAxis")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class AngleAxis extends BaseOption {
+  @Prop() angleAxis?: object;
+
+  optionKey = "angleAxis";
+
+  @Watch("angleAxis")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Radar extends BaseOption {
+  @Prop() radar?: object;
+
+  optionKey = "radar";
+
+  @Watch("radar")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class Parallel extends BaseOption {
+  @Prop() parallel?: object;
+
+  optionKey = "parallel";
+
+  @Watch("parallel")
+  onChange() {
+    this.refreshOption();
+  }
+}
+
+@Component
+export class ParallelAxis extends BaseOption {
+  @Prop() parallelAxis?: object;
+
+  optionKey = "parallelAxis";
+
+  @Watch("parallelAxis")
+  onChange() {
+    this.refreshOption();
+  }
+}
