@@ -17,6 +17,7 @@
     "start-v": "cd example/demo-vue && webpack-dev-server"
   },
   "dependencies": {
+    "echarts": "^5.0.2",
     "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

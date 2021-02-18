@@ -16,12 +16,18 @@ const ChartContext = createContext<IChartContext>({
 
 export const useChartContext = () => useContext(ChartContext);
 
+let globalEcharts: typeof ECharts | undefined = undefined;
+
+export const setECharts = (echarts: typeof ECharts) => {
+  globalEcharts = echarts;
+};
+
 /**
  * 获取原始echarts对象
  * 现只兼容<script>标签引入方式
  */
 export const getECharts = (): typeof ECharts => {
-  return window.echarts;
+  return globalEcharts || window.echarts;
 };
 
 //fix color conflict

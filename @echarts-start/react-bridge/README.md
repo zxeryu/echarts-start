@@ -5,7 +5,12 @@
 ## Necessary
 
 ```
-1. window对象注入echarts. <script type="text/javascript" src="//cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script>
+1.
+window对象注入echarts. <script type="text/javascript" src="//cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.min.js"></script>
+或：
+import * as echarts from 'echarts';
+setEcharts(echarts);
+
 2. 需要 "lodash": "^4.x", "react": "16.8+"
 ```
 
