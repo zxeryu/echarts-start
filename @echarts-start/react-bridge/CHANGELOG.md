@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.2.3...@echarts-start/react-bridge@0.3.0) (2021-02-18)
+
+### Features
+
+- **react-bridge:** support echarts form package ([86d5af2](https://github.com/zxeryu/echarts-start/commit/86d5af2dc21da55baa09e7ce808df0fc208694d1))
+
 ## [0.2.3](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.2.2...@echarts-start/react-bridge@0.2.3) (2020-11-07)
 
 ### Performance Improvements
