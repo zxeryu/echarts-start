@@ -34,7 +34,7 @@
     "lodash": "^4.x",
     "react": "16.8.x"
   },
-  "devDependencies": {
-    "@types/echarts": "4.6.5"
+  "dependencies": {
+    "@types/echarts": "4.9.4"
   }
 }

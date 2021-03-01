@@ -35,6 +35,6 @@
     "vue": "2.6.x"
   },
   "dependencies": {
-    "@types/echarts": "4.6.5"
+    "@types/echarts": "4.9.4"
   }
 }

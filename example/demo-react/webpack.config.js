@@ -1,5 +1,6 @@
 const path = require("path");
 module.exports = {
+  mode: "development",
   entry: {
     app: "./src/index.tsx",
   },
@@ -21,6 +22,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "public"),
     compress: true,
+    historyApiFallback: true,
     port: 3000,
   },
 };
