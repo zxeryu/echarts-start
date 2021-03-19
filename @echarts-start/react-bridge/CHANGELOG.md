@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.3.0...@echarts-start/react-bridge@0.3.1) (2021-03-19)
+
+### Performance Improvements
+
+- **react-bridge:** add options for Option ([fdcc118](https://github.com/zxeryu/echarts-start/commit/fdcc118ab57b2dfc45ec00f25999eec8e0f63d98))
+
 # [0.3.0](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.2.3...@echarts-start/react-bridge@0.3.0) (2021-02-18)
 
 ### Features

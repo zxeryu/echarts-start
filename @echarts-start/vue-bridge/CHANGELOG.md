@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.3.0...@echarts-start/vue-bridge@0.3.1) (2021-03-19)
+
+**Note:** Version bump only for package @echarts-start/vue-bridge
+
 # [0.3.0](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.2.3...@echarts-start/vue-bridge@0.3.0) (2020-12-21)
 
 ### Features
