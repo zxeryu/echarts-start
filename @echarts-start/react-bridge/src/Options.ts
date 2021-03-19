@@ -10,7 +10,7 @@ import { generateId, shallowEqual } from "./utils";
  * @param deepCompareKeys 指定深度比较的key
  */
 const createOption = <T>(key: string, deepCompareKeys?: string[]) => {
-  return (props: T) => {
+  return (props: T & { options?: T }) => {
     const { updateOption } = useChartContext();
     const ref = useRef<T>(); //上一次update对象
     const id = useMemo(() => get(props, "id", generateId() + key), []);
@@ -26,12 +26,14 @@ const createOption = <T>(key: string, deepCompareKeys?: string[]) => {
     }, []);
 
     useEffect(() => {
+      const otherProps = omit(props, "options");
+      const options = get(props, "options");
       //浅比较，减少更新次数
       if (!compare(ref.current, props)) {
         if (key === "extra") {
-          updateOption({ ...props });
+          updateOption({ ...otherProps });
         } else {
-          updateOption({ [key]: { ...props, id } });
+          updateOption({ [key]: { ...props, ...options, id } });
         }
         ref.current = props;
       }
