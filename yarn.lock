@@ -1990,14 +1990,7 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/echarts@4.6.5":
-  version "4.6.5"
-  resolved "https://registry.yarnpkg.com/@types/echarts/-/echarts-4.6.5.tgz#6aba35e7d5fdb97f0852865a11ad1cd52f0b72fe"
-  integrity sha512-lzYceya5tCBAUTjYnTP2Lwd1VAlyjLfWm3pRFqS4Nzj+Lb+1ej+uX40miM/je73jqVXvO+g3FTMNzyKWDmLR1Q==
-  dependencies:
-    "@types/zrender" "*"
-
-"@types/echarts@4.9.6":
+"@types/echarts@^4.9.6":
   version "4.9.6"
   resolved "https://registry.yarnpkg.com/@types/echarts/-/echarts-4.9.6.tgz#20c9875bf6911dc077728d800b15f2496131c904"
   integrity sha512-QdTNGf5uvQouernGelP78De3ltnGUBUeVrgSk0F5prFHif5O85gYF48w4soEBzfM3TrWplWsfexBOhZdB1G7kg==
