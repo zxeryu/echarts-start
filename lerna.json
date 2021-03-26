@@ -6,7 +6,7 @@
   "command": {
     "version": {
       "exact": false,
-      "allowBranch": "master",
+      "allowBranch": "vue2.6.x",
       "message": "chore(release): %s"
     }
   },
