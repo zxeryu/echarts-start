@@ -1,12 +1,21 @@
 import { Component, Prop, Provide, ProvideReactive, Ref, Vue } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { CreateElement, VNode } from "vue";
-import { EChartOption, ECharts as IEChart } from "echarts";
+import ECharts, { EChartOption, ECharts as IEChart } from "echarts";
 import { assign, forEach, get, has, isArray, keys, map, omit, size, some, pick } from "lodash";
-import { getECharts } from "./util";
 import { ChartMethodProps, ChartMethods } from "./Method";
-import { Extra, ExtraKeys, ExtraProps } from "./Options";
+import { Extra, ExtraKeys } from "./Options";
 import { COLOR_PLATE_24 } from "./theme";
+
+let globalEcharts: typeof ECharts | undefined = undefined;
+
+export const setECharts = (echarts: typeof ECharts) => {
+  globalEcharts = echarts;
+};
+
+export const getECharts = (): typeof ECharts => {
+  return globalEcharts || window.echarts;
+};
 
 @Component
 class BaseChartProps extends Vue {
@@ -146,8 +155,9 @@ export class BaseChart extends BaseChartProps {
 }
 
 @Component
-export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) {
+export class Chart extends mixins(BaseChartProps, ChartMethodProps) {
   render(createElement: CreateElement): VNode {
+    const mergeProps = { ...this.$attrs, ...this.$options.propsData };
     return createElement(
       BaseChart,
       {
@@ -155,7 +165,7 @@ export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) 
       },
       [
         createElement(ChartMethods, { props: pick(this.$options.propsData, ["resize", "loading"]) }),
-        createElement(Extra, { props: { color: COLOR_PLATE_24, ...pick(this.$options.propsData, ExtraKeys) } }),
+        createElement(Extra, { props: { color: COLOR_PLATE_24, ...pick(mergeProps, ExtraKeys) } }),
         this.$slots.default,
       ],
     );

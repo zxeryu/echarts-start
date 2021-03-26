@@ -14,7 +14,10 @@ import {
   Event,
   Grid,
   VisualMap,
+  setECharts,
 } from "@echarts-start/vue-bridge";
+
+import * as echarts from "echarts";
 
 Vue.component("CBaseChart", BaseChart);
 Vue.component("CChart", Chart);
@@ -29,6 +32,8 @@ Vue.component("CMethodResize", MethodResize);
 Vue.component("CEvent", Event);
 Vue.component("CGrid", Grid);
 Vue.component("CVisualMap", VisualMap);
+
+setECharts(echarts);
 
 new Vue({
   render: (h) => h(App),

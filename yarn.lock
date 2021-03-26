@@ -1997,6 +1997,13 @@
   dependencies:
     "@types/zrender" "*"
 
+"@types/echarts@4.9.6":
+  version "4.9.6"
+  resolved "https://registry.yarnpkg.com/@types/echarts/-/echarts-4.9.6.tgz#20c9875bf6911dc077728d800b15f2496131c904"
+  integrity sha512-QdTNGf5uvQouernGelP78De3ltnGUBUeVrgSk0F5prFHif5O85gYF48w4soEBzfM3TrWplWsfexBOhZdB1G7kg==
+  dependencies:
+    "@types/zrender" "*"
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
