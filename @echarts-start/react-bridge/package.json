@@ -33,8 +33,5 @@
     "@babel/runtime-corejs3": "*",
     "lodash": "^4.x",
     "react": "16.8.x"
-  },
-  "dependencies": {
-    "@types/echarts": "4.9.4"
   }
 }
