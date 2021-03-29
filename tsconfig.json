@@ -14,7 +14,7 @@
     "moduleResolution": "Node",
     "jsx": "react",
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2020",
     "pretty": true,
     "strict": true,
     //    "sourceMap": true
