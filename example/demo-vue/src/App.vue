@@ -12,23 +12,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import BasicDemo from "./component/BasicDemo.vue";
-import DatasetDemo from "./component/DatasetDemo.vue";
-@Component({
-  components: { BasicDemo, DatasetDemo },
-})
-export default class App extends Vue {
-  private current: string = "BasicDemo";
+import { defineComponent, ref } from "vue";
+import BasicDemo from "./components/BasicDemo.vue";
+import DatasetDemo from "./components/DatasetDemo.vue";
+export default defineComponent({
+  name: "App",
+  components: {
+    BasicDemo,
+    DatasetDemo,
+  },
+  setup: () => {
+    const current = ref("BasicDemo");
 
-  data(): object {
-    return {
-      current: "BasicDemo",
+    const onMenuClick = (c: string) => {
+      current.value = c;
     };
-  }
 
-  onMenuClick(key) {
-    this.current = key;
-  }
-}
+    return {
+      current,
+      onMenuClick,
+    };
+  },
+});
 </script>
+
+<style scoped></style>

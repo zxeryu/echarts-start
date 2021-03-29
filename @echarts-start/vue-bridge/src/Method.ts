@@ -1,87 +1,57 @@
-import { Component, InjectReactive, Prop, Vue, Watch } from "vue-property-decorator";
-import { mixins } from "vue-class-component";
-import { CreateElement, VNode } from "vue";
 import { ECharts as IEChart, EChartsLoadingOption, EChartsResizeOption } from "echarts";
-import { debounce } from "lodash";
+import { debounce, get } from "lodash";
+import { defineComponent, onMounted, onBeforeUnmount, inject, Ref, watchEffect } from "vue";
 
-export interface IChartMethodProps {
+interface IResizeProps {
   resize?: boolean | EChartsResizeOption;
+}
+
+export const MethodResize = defineComponent({
+  props: {
+    resize: Boolean || Object,
+  },
+  setup: (props: IResizeProps, context) => {
+    const chart = inject<Ref<IEChart>>("chart")!;
+
+    const resize = get({ ...context.attrs, ...props }, "resize");
+
+    const handleResize = debounce(() => {
+      if (!resize) return;
+      if (typeof resize === "boolean") {
+        chart.value.resize();
+      } else {
+        chart.value.resize(resize);
+      }
+    }, 300);
+
+    onMounted(() => {
+      window.addEventListener("resize", handleResize);
+    });
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+  },
+});
+
+interface ILoadingProps {
   loading?: boolean | EChartsLoadingOption;
 }
 
-@Component
-class BaseMethod extends Vue {
-  render(createElement: CreateElement): VNode {
-    return createElement("");
-  }
-}
+export const MethodLoading = defineComponent({
+  props: {
+    loading: Boolean || Object,
+  },
+  setup: (props: ILoadingProps) => {
+    const chart = inject<Ref<IEChart>>("chart")!;
 
-@Component
-export class MethodResize extends BaseMethod {
-  @InjectReactive() chart!: IEChart;
-
-  @Prop() resize?: IChartMethodProps["resize"];
-
-  mounted(): void {
-    window.addEventListener("resize", this.handleResize);
-  }
-
-  beforeDestroy(): void {
-    window.removeEventListener("resize", this.handleResize);
-  }
-
-  handleResize = debounce(this.resizeOperate, 300);
-
-  resizeOperate() {
-    if (this.resize) {
-      if (typeof this.resize === "boolean") {
-        this.chart.resize();
-      } else {
-        this.chart.resize(this.resize);
+    watchEffect(() => {
+      const loading = props.loading;
+      if (typeof loading === "undefined") return;
+      if (typeof loading === "boolean") {
+        loading ? chart.value.showLoading("default", { text: "", lineWidth: 2 }) : chart.value.hideLoading();
+        return;
       }
-    }
-  }
-}
-
-@Component
-export class MethodLoading extends BaseMethod {
-  @InjectReactive() chart!: IEChart;
-
-  @Prop() loading?: IChartMethodProps["loading"];
-
-  @Watch("loading")
-  onLoadingChange() {
-    if (typeof this.loading === "boolean") {
-      this.loading
-        ? this.chart.showLoading("default", {
-            text: "",
-            lineWidth: 2,
-          } as any)
-        : this.chart.hideLoading();
-      return;
-    }
-    this.loading ? this.chart.showLoading("default", this.loading) : this.chart.hideLoading();
-  }
-}
-
-// @Component
-// export class ChartMethods extends Vue {
-//   @Prop() resize?: IChartMethodProps["resize"];
-//   @Prop() loading?: IChartMethodProps["loading"];
-//
-//   render(createElement: CreateElement): VNode {
-//     return createElement("div", {}, [
-//       createElement(MethodLoading, { props: { loading: this.loading } }),
-//       createElement(MethodResize, { props: { resize: this.resize } }),
-//     ]);
-//   }
-// }
-
-@Component
-export class ChartMethodProps extends Vue {
-  @Prop() resize?: IChartMethodProps["resize"];
-  @Prop() loading?: IChartMethodProps["loading"];
-}
-
-@Component
-export class ChartMethods extends mixins(MethodResize, MethodLoading) {}
+      loading ? chart.value.showLoading("default", loading) : chart.value.hideLoading();
+    });
+  },
+});

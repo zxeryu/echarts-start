@@ -1,5 +1,5 @@
-import Vue from "vue";
-import App from "./App.vue";
+import { createApp, App } from "vue";
+import StartApp from "./App.vue";
 import {
   BaseChart,
   Chart,
@@ -14,22 +14,25 @@ import {
   Event,
   Grid,
   VisualMap,
+  setECharts,
 } from "@echarts-start/vue-bridge";
+import * as echarts from "echarts";
+setECharts(echarts);
 
-Vue.component("CBaseChart", BaseChart);
-Vue.component("CChart", Chart);
-Vue.component("CXAxis", XAxis);
-Vue.component("CYAxis", YAxis);
-Vue.component("CDataset", Dataset);
-Vue.component("CSeries", Series);
-Vue.component("CTooltip", Tooltip);
-Vue.component("CLegend", Legend);
-Vue.component("CMethodLoading", MethodLoading);
-Vue.component("CMethodResize", MethodResize);
-Vue.component("CEvent", Event);
-Vue.component("CGrid", Grid);
-Vue.component("CVisualMap", VisualMap);
+const bridge = (app: App) => {
+  app.component("CBaseChart", BaseChart);
+  app.component("CChart", Chart);
+  app.component("CXAxis", XAxis);
+  app.component("CYAxis", YAxis);
+  app.component("CDataset", Dataset);
+  app.component("CSeries", Series);
+  app.component("CTooltip", Tooltip);
+  app.component("CLegend", Legend);
+  app.component("CMethodLoading", MethodLoading);
+  app.component("CMethodResize", MethodResize);
+  app.component("CEvent", Event);
+  app.component("CGrid", Grid);
+  app.component("CVisualMap", VisualMap);
+};
 
-new Vue({
-  render: (h) => h(App),
-}).$mount("#root");
+createApp(StartApp).use(bridge).mount("#root");

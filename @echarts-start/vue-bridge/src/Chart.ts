@@ -1,163 +1,164 @@
-import { Component, Prop, Provide, ProvideReactive, Ref, Vue } from "vue-property-decorator";
-import { mixins } from "vue-class-component";
-import { CreateElement, VNode } from "vue";
-import { EChartOption, ECharts as IEChart } from "echarts";
+import ECharts, { EChartOption, ECharts as IEChart } from "echarts";
 import { assign, forEach, get, has, isArray, keys, map, omit, size, some, pick } from "lodash";
-import { getECharts } from "./util";
-import { ChartMethodProps, ChartMethods } from "./Method";
-import { Extra, ExtraKeys, ExtraProps } from "./Options";
-import { COLOR_PLATE_24 } from "./theme";
+import { defineComponent, h, ref, provide, isRef, onMounted, toRaw } from "vue";
+import { MethodLoading, MethodResize } from "./Method";
+import { Extra, ExtraKeys } from "./Options";
 
-@Component
-class BaseChartProps extends Vue {
-  @Prop() theme?: object | string;
-  @Prop() opts?: {
-    devicePixelRatio?: number;
-    renderer?: string;
-    width?: number | string;
-    height?: number | string;
-  };
-  @Prop() chartRef?: (chartRef: IEChart) => void;
-  @Prop() noCoordinate?: boolean; //是否需要坐标轴
-}
+let globalEcharts: typeof ECharts | undefined = undefined;
 
-@Component
-export class BaseChart extends BaseChartProps {
-  @Ref("chartDiv") chartDiv!: HTMLDivElement;
+export const setECharts = (echarts: typeof ECharts) => {
+  globalEcharts = echarts;
+};
 
-  private xAxis: EChartOption[] = [];
-  private yAxis: EChartOption[] = [];
-  private grid: EChartOption[] = [];
-  private isHaveGrid = false;
-  private list: EChartOption[] = [];
+export const getECharts = (): typeof ECharts => {
+  return globalEcharts || window.echarts;
+};
 
-  @ProvideReactive("chart") chart: IEChart | undefined = undefined;
-  @Provide("updateOption") updateOption: (option: EChartOption) => void = this.updateOptions;
-
-  data(): object {
-    return {
-      chart: null,
-    };
+const setOption = (chart: IEChart, option: EChartOption) => {
+  if (size(keys(option)) > 1) {
+    chart.setOption(option);
+    return;
   }
-
-  mounted(): void {
-    this.chart = getECharts().init(this.chartDiv, this.theme, this.opts);
-    this.chartRef && this.chartRef(this.chart);
-  }
-
-  setOption(chart: IEChart, option: EChartOption) {
-    if (size(keys(option)) > 1) {
-      chart.setOption(option);
-      return;
-    }
-    const oldOption = chart.getOption();
-    forEach(option, (v, k) => {
-      const id = get(v, "id");
-      const oldV = get(oldOption, k);
-      if (id && typeof oldV === "object") {
-        if (isArray(oldV)) {
-          //仅判断默认的添加或更新
-          const isChange = some(oldV, (item) => !get(item, "id") || get(item, "uniqueId") === id);
-          if (isChange) {
-            const o = map(oldV, (item) => {
-              //默认属性
-              if (!get(item, "id") || get(item, "uniqueId") === id) {
-                return assign(item, omit(v as object, "id"), { uniqueId: id });
-              }
-              return item;
-            });
-            chart.setOption({ [k]: o });
-            return;
-          }
-        } else {
-          if (!get(oldV, "id") || get(oldV, "uniqueId") === id) {
-            chart.setOption({ [k]: assign(oldV, omit(v as object, "id"), { uniqueId: id }) });
-            return;
-          }
+  const oldOption = chart.getOption();
+  forEach(option, (v, k) => {
+    const id = get(v, "id");
+    const oldV = get(oldOption, k);
+    if (id && typeof oldV === "object") {
+      if (isArray(oldV)) {
+        //仅判断默认的添加或更新
+        const isChange = some(oldV, (item) => !get(item, "id") || get(item, "uniqueId") === id);
+        if (isChange) {
+          const o = map(oldV, (item) => {
+            //默认属性
+            if (!get(item, "id") || get(item, "uniqueId") === id) {
+              return assign(item, omit(v as object, "id"), { uniqueId: id });
+            }
+            return item;
+          });
+          chart.setOption({ [k]: o });
+          return;
+        }
+      } else {
+        if (!get(oldV, "id") || get(oldV, "uniqueId") === id) {
+          chart.setOption({ [k]: assign(oldV, omit(v as object, "id"), { uniqueId: id }) });
+          return;
         }
       }
-      chart.setOption(option);
-    });
-  }
+    }
+    chart.setOption(option);
+  });
+};
 
-  updateOptions(option: EChartOption) {
-    if (!this.chart) {
+export const BaseChart = defineComponent((props, context) => {
+  const divRef = ref<HTMLDivElement>();
+  const chart = ref<IEChart>();
+  //变量
+  const calData: {
+    xAxis: EChartOption[];
+    yAxis: EChartOption[];
+    grid: EChartOption[];
+    isHaveGrid: boolean;
+    list: EChartOption[];
+  } = {
+    xAxis: [],
+    yAxis: [],
+    grid: [],
+    isHaveGrid: false,
+    list: [],
+  };
+
+  const chartRef = get({ ...context.attrs, ...props }, "chartRef");
+
+  onMounted(() => {
+    const theme: any = get(context.attrs, "theme");
+    const opts: any = get(context.attrs, "opts");
+    chart.value = getECharts().init(divRef.value!, theme, opts);
+
+    if (chartRef) {
+      isRef(chartRef) && (chartRef.value = toRaw(chart.value));
+      typeof chartRef === "function" && chartRef(toRaw(chart.value));
+    }
+  });
+
+  const updateOptions = (option: EChartOption) => {
+    const c = toRaw<IEChart>(chart.value!);
+
+    if (get(context.attrs, "noCoordinate")) {
+      setOption(c, option);
       return;
     }
-
-    if (this.noCoordinate) {
-      this.setOption(this.chart, option);
-      return;
-    }
-    const oldOption = this.chart.getOption();
+    const oldOption = c.getOption();
     if (!has(oldOption, "xAxis") || !has(oldOption, "yAxis")) {
       if (has(option, "xAxis")) {
         //保存xAxis
-        this.xAxis.push(option);
-        this.isHaveGrid = this.isHaveGrid || has(option, ["xAxis", "gridIndex"]);
+        calData.xAxis.push(option);
+        calData.isHaveGrid = calData.isHaveGrid || has(option, ["xAxis", "gridIndex"]);
       } else if (has(option, "yAxis")) {
         //保存第yAxis
-        this.yAxis.push(option);
-        this.isHaveGrid = this.isHaveGrid || has(option, ["yAxis", "gridIndex"]);
+        calData.yAxis.push(option);
+        calData.isHaveGrid = calData.isHaveGrid || has(option, ["yAxis", "gridIndex"]);
       } else if (has(option, "grid")) {
-        this.grid.push(option);
+        calData.grid.push(option);
       } else {
         //保存option
-        this.list.push(option);
+        calData.list.push(option);
       }
 
       let isPrepared = false;
-      if (this.isHaveGrid) {
-        const xSize = size(this.xAxis);
-        if (xSize > 0 && xSize === size(this.yAxis) && xSize === size(this.grid)) {
-          forEach(this.xAxis, (_, i) => {
-            this.chart?.setOption(assign({}, this.xAxis[i], this.yAxis[i], this.grid[i]));
+      if (calData.isHaveGrid) {
+        const xSize = size(calData.xAxis);
+        if (xSize > 0 && xSize === size(calData.yAxis) && xSize === size(calData.grid)) {
+          forEach(calData.xAxis, (_, i) => {
+            c.setOption(assign({}, calData.xAxis[i], calData.yAxis[i], calData.grid[i]));
           });
           isPrepared = true;
         }
       } else {
-        const xSize = size(this.xAxis);
-        if (xSize > 0 && xSize === size(this.yAxis)) {
-          forEach(this.xAxis, (_, i) => {
-            this.chart?.setOption(assign({}, this.xAxis[i], this.yAxis[i]));
+        const xSize = size(calData.xAxis);
+        if (xSize > 0 && xSize === size(calData.yAxis)) {
+          forEach(calData.xAxis, (_, i) => {
+            c.setOption(assign({}, calData.xAxis[i], calData.yAxis[i]));
           });
           isPrepared = true;
         }
       }
 
       if (isPrepared) {
-        forEach(this.list, (item) => {
-          this.chart && this.setOption(this.chart, item);
+        forEach(calData.list, (item) => {
+          setOption(c, item);
         });
-        this.xAxis = [];
-        this.yAxis = [];
-        this.grid = [];
-        this.list = [];
+        calData.xAxis = [];
+        calData.yAxis = [];
+        calData.grid = [];
+        calData.list = [];
       }
     } else {
       //更新options
-      this.setOption(this.chart, option);
+      setOption(c, option);
     }
-  }
+  };
 
-  render(createElement: CreateElement): VNode {
-    return createElement("div", { ref: "chartDiv" }, this.chart ? this.$slots.default : []);
-  }
-}
+  provide("updateOption", updateOptions);
+  provide("chart", chart);
 
-@Component
-export class Chart extends mixins(BaseChartProps, ChartMethodProps, ExtraProps) {
-  render(createElement: CreateElement): VNode {
-    return createElement(
-      BaseChart,
-      {
-        props: pick(this.$options.propsData, ["theme", "opts", "chartRef", "noCoordinate"]),
-      },
-      [
-        createElement(ChartMethods, { props: pick(this.$options.propsData, ["resize", "loading"]) }),
-        createElement(Extra, { props: { color: COLOR_PLATE_24, ...pick(this.$options.propsData, ExtraKeys) } }),
-        this.$slots.default,
-      ],
-    );
-  }
-}
+  return () => {
+    return h("div", { ref: divRef }, chart.value && context.slots.default ? context.slots.default() : undefined);
+  };
+});
+
+export const Chart = defineComponent({
+  props: {
+    loading: Boolean || Object,
+    resize: Boolean || Object,
+  },
+  setup: (props, context) => {
+    return () => {
+      return h(BaseChart, { ...props, ...context.attrs }, [
+        h(MethodResize, { resize: props.resize }),
+        h(MethodLoading, { loading: props.loading }),
+        h(Extra, { ...pick(context.attrs || [], ExtraKeys) }),
+        context.slots.default ? context.slots.default() : undefined,
+      ]);
+    };
+  },
+});
