@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.3.1...@echarts-start/vue-bridge@0.5.0) (2021-03-29)
+
+### Bug Fixes
+
+- **vue-bridge:** version ([f585231](https://github.com/zxeryu/echarts-start/commit/f5852319129b28f3d10707a976a64446e8f27481))
+
+### Features
+
+- support vue3.0 ([e9e596b](https://github.com/zxeryu/echarts-start/commit/e9e596b12149b8bb02761d735b89014087b27acb))
+
 ## [0.3.1](https://github.com/zxeryu/echarts-start/compare/@echarts-start/vue-bridge@0.3.0...@echarts-start/vue-bridge@0.3.1) (2021-03-19)
 
 **Note:** Version bump only for package @echarts-start/vue-bridge
