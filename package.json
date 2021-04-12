@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "prepare": "tsc && lerna run prepare",
+    "build": "tsc && lerna run prepare",
     "l-release": "lerna version --conventional-commits",
     "l-publish": "lerna publish from-git",
     "start": "cd example/demo-react && webpack serve",
