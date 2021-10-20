@@ -17,9 +17,14 @@ const ChartContext = createContext<IChartContext>({
 export const useChartContext = () => useContext(ChartContext);
 
 let globalEcharts: typeof ECharts | undefined = undefined;
+let globalColors: string[] | undefined = undefined;
 
 export const setECharts = (echarts: typeof ECharts) => {
   globalEcharts = echarts;
+};
+
+export const setChartColor = (colors: string[]) => {
+  globalColors = colors;
 };
 
 /**
@@ -230,7 +235,7 @@ export const Chart = ({
     <BaseChart {...omit(otherProps, ExtraKeys)}>
       {children}
       <ChartMethods loading={loading} resize={resize} />
-      <Extra color={COLOR_PLATE_24} {...pick(otherProps, ExtraKeys)} />
+      <Extra color={globalColors || COLOR_PLATE_24} {...pick(otherProps, ExtraKeys)} />
     </BaseChart>
   );
 };
