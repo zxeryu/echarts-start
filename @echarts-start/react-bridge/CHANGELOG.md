@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.3.2...@echarts-start/react-bridge@0.3.3) (2021-10-20)
+
+### Performance Improvements
+
+- **react-bridge:** global color ([cb521e6](https://github.com/zxeryu/echarts-start/commit/cb521e6689f880b4e6576f235a8c4bd6882ad957))
+
 ## [0.3.2](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.3.1...@echarts-start/react-bridge@0.3.2) (2021-03-29)
 
 **Note:** Version bump only for package @echarts-start/react-bridge
