@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.3.3...@echarts-start/react-bridge@0.3.4) (2023-08-10)
+
+### Bug Fixes
+
+- setOption add notMerge ([0f95021](https://github.com/zxeryu/echarts-start/commit/0f95021e6f96626969b415ce7d99027afb30f1e3))
+
 ## [0.3.3](https://github.com/zxeryu/echarts-start/compare/@echarts-start/react-bridge@0.3.2...@echarts-start/react-bridge@0.3.3) (2021-10-20)
 
 ### Performance Improvements
