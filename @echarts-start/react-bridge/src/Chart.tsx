@@ -41,6 +41,7 @@ export interface IBaseChart extends Omit<HTMLAttributes<HTMLDivElement>, "color"
   //echarts init func
   theme?: object | string;
   opts?: {
+    notMerge?: boolean;
     devicePixelRatio?: number;
     renderer?: string;
     width?: number | string;
@@ -112,7 +113,7 @@ export const BaseChart = ({
    */
   const setOption = useCallback((chart: IEChart, option: EChartOption) => {
     if (size(keys(option)) > 1) {
-      chart.setOption(option);
+      chart.setOption(option, opts);
       return;
     }
     const oldOption = chart.getOption();
@@ -131,17 +132,17 @@ export const BaseChart = ({
               }
               return item;
             });
-            chart.setOption({ [k]: o });
+            chart.setOption({ [k]: o }, opts);
             return;
           }
         } else {
           if (!get(oldV, "id") || get(oldV, "uniqueId") === id) {
-            chart.setOption({ [k]: assign(oldV, omit(v as object, "id"), { uniqueId: id }) });
+            chart.setOption({ [k]: assign(oldV, omit(v as object, "id"), { uniqueId: id }) }, opts);
             return;
           }
         }
       }
-      chart.setOption(option);
+      chart.setOption(option, opts);
     });
   }, []);
 
@@ -183,6 +184,7 @@ export const BaseChart = ({
             forEach(optionsRef.current.xAxis, (_, i) => {
               chart.setOption(
                 assign({}, optionsRef.current.xAxis[i], optionsRef.current.yAxis[i], optionsRef.current.grid[i]),
+                opts,
               );
             });
             isPrepared = true;
@@ -191,7 +193,7 @@ export const BaseChart = ({
           const xSize = size(optionsRef.current.xAxis);
           if (xSize > 0 && xSize === size(optionsRef.current.yAxis)) {
             forEach(optionsRef.current.xAxis, (_, i) => {
-              chart.setOption(assign({}, optionsRef.current.xAxis[i], optionsRef.current.yAxis[i]));
+              chart.setOption(assign({}, optionsRef.current.xAxis[i], optionsRef.current.yAxis[i]), opts);
             });
             isPrepared = true;
           }
